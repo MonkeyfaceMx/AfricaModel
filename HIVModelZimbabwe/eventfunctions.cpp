@@ -54,6 +54,7 @@ extern double** DeathArray_Women;
 extern double** DeathArray_Men;
 
 
+
 //// --- Important Internal informtaion --- ////
 int RandomMinMax_2(int min, int max){							// Provide function for random number generator between min and max number
     return rand()%(max-min+1)+min;							    // Note: if min=0 and max=4 it will generate 0,1,2,3,4
@@ -259,6 +260,18 @@ void EventTellNewYear(person *MyPointerToPerson){
 }
 
 
+//// --- When 1970 starts assign Region and HIV infection date --- ///
+
+void EventAssignRegionAndHIV(person *MyPointerToPerson){
+    cout << "It is now " << *p_GT << " lets assign region and evaluate date of HIV infection!" << endl;
+    for(int i=0; i<total_population; i++) {
+        cout << "I " << i << " person index " << MyArrayOfPointersToPeople[i]->PersonID << endl;
+        (MyArrayOfPointersToPeople[i])->RegionDistribution();
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHIVInfection();
+    }
+}
+
+
 //// --- ART Category switch from Kids to Adult --- ////
 void EventARTCatSwitch(person *MyPointerToPerson){
     
@@ -375,9 +388,13 @@ void EventBirth(person *MyPointerToPerson){
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDoBNewEntry();
         (MyArrayOfPointersToPeople[total_population-1])->GetDateOfDeath();
         (MyArrayOfPointersToPeople[total_population-1])->GetDateOfBaby();
-        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHIVInfection();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateNCD();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateCancers();
+        
+        if (*p_GT>=1970){
+            (MyArrayOfPointersToPeople[total_population-1])->RegionDistribution();
+            (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHIVInfection();
+        }
         
         
         // Link Mother and Child

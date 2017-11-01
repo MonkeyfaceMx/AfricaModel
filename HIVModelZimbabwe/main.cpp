@@ -71,7 +71,7 @@ int         UN_Pop;                                                             
 int         init_pop;                                                                                           //////////
 int         total_population;                                                                                   //////////
 double      Sex_ratio;
-extern double Region_ratio;
+//extern double Region_ratio;
 //extern double Region_ratio1;
 //extern double Region_ratio2;
 //extern double Region_ratio3;
@@ -178,19 +178,19 @@ int main(){
     loadDeathArray_Men();
     //loadHIVArray_Women();
     //loadHIVArray_Men();
-    void loadHIVArray_Women_Central();
-    void loadHIVArray_Men_Central();
-    void loadHIVArray_Women_Coast();
-    void loadHIVArray_Men_Coast();
-    void loadHIVArray_Women_Eastern();
-    void loadHIVArray_Men_Eastern();
-    void loadHIVArray_Women_Nairobi();
-    void loadHIVArray_Men_Nairobi();
-    void loadHIVArray_Women_NorthEastern();
-    void loadHIVArray_Men_NorthEastern();
-    void loadHIVArray_Women_Nyanza();
-    void loadHIVArray_Men_Nyanza();
-    void loadHIVArray_Women_RiftValley();
+    loadHIVArray_Women_Central();
+    loadHIVArray_Men_Central();
+    loadHIVArray_Women_Coast();
+    loadHIVArray_Men_Coast();
+    loadHIVArray_Women_Eastern();
+    loadHIVArray_Men_Eastern();
+    loadHIVArray_Women_Nairobi();
+    loadHIVArray_Men_Nairobi();
+    loadHIVArray_Women_NorthEastern();
+    loadHIVArray_Men_NorthEastern();
+    loadHIVArray_Women_Nyanza();
+    loadHIVArray_Men_Nyanza();
+    loadHIVArray_Women_RiftValley();
     loadHIVArray_Men_RiftValley();
     loadHIVArray_Women_Western();
     loadHIVArray_Men_Western();
@@ -217,7 +217,7 @@ int main(){
     p_PQ=&iQ;																// Define pointer to event Q
     p_PY=&PY;
     cout << p_PY << endl;
-    
+
     
     //// --- MAKING POPULATION--- ////
     
@@ -233,14 +233,15 @@ int main(){
     for(int i=0; i<total_population; i++){
         (MyArrayOfPointersToPeople[i])->Alive=1;							// --- Assign Life Status ---
         (MyArrayOfPointersToPeople[i])->GenderDistribution();				// --- Assign Sex- ---
-        (MyArrayOfPointersToPeople[i])->RegionDistribution();               // --- Assign Region ---
         (MyArrayOfPointersToPeople[i])->GetMyDoB();							// --- Assign DoB/Age ---
         (MyArrayOfPointersToPeople[i])->GetDateOfDeath();					// --- Assign date of death ---
         if (MyArrayOfPointersToPeople[i]->Sex == 2 && MyArrayOfPointersToPeople[i]->Age<50 && MyArrayOfPointersToPeople[i]->AgeAtDeath>=15) {(MyArrayOfPointersToPeople[i])->GetDateOfBaby();}              // --- Assign Birth of all Children- ---
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHIVInfection();          // --- Get date of HIV infection ---
         (MyArrayOfPointersToPeople[i])->GetMyDateNCD();                     // --- Get date of NCDs ---
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
     }
+    
+    ///// --- Assign region in 1970 ---- /////
+    
     
     cout << "Section 4 - We've finished creating a population" << endl;
     
@@ -253,6 +254,12 @@ int main(){
     TellNewYear->time = StartYear;
     TellNewYear->p_fun = &EventTellNewYear;
     iQ.push(TellNewYear);
+    
+    event * Its1970 = new event;                                        // --- Tell me every time  a new year start ---
+    Events.push_back(Its1970);
+    Its1970->time = 1970;
+    Its1970->p_fun = &EventAssignRegionAndHIV;
+    iQ.push(Its1970);
     
     
     //// --- LETS RUN THE EVENTQ --- ////

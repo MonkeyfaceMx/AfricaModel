@@ -180,15 +180,23 @@ void person::RegionDistribution(){
     E(cout << "We are assigning region!" << endl;)
     E(cout << "First region" << Region_ratio[0] << " Second region " << Region_ratio[1] << " Third region" << Region_ratio[2] << " Fourth region" << Region_ratio[3] << "Fifth region" << Region_ratio[4] << "Sixth region" << Region_ratio[5] << "Seventh region" << Region_ratio[6] << " Eighth region" << Region_ratio[7] << "Ninth region" << endl;)
     
-    double    r = ((double) rand() / (RAND_MAX)) ;
-    if (r<=Region_ratio[0]){Region=1;}                                    // Where 1=Central, 2=Coast, 3=Eastern, 4=Nairobi, 5=North Eastern, 6=Nyanza, 7=Rift Valley, 8=Western
-    else if (r>Region_ratio[0] && r<=Region_ratio[1]){Region=2;}
-    else if (r>Region_ratio[1] && r<=Region_ratio[2]){Region=3;}
-    else if (r>Region_ratio[2] && r<=Region_ratio[3]){Region=4;}
-    else if (r>Region_ratio[3] && r<=Region_ratio[4]){Region=5;}
-    else if (r>Region_ratio[4] && r<=Region_ratio[5]){Region=6;}
-    else if (r>Region_ratio[5] && r<=Region_ratio[6]){Region=7;}
-    else if (r>Region_ratio[7]){Region=8;}
+    cout << "First region" << Region_ratio[0] << " Second region " << Region_ratio[1] << " Third region" << Region_ratio[2] << " Fourth region" << Region_ratio[3] << "Fifth region" << Region_ratio[4] << "Sixth region" << Region_ratio[5] << "Seventh region" << Region_ratio[6] << " Eighth region" << Region_ratio[7] << "Ninth region" << endl;
+    
+    if(Alive == 1) {
+        double    r = ((double) rand() / (RAND_MAX)) ;
+        cout << "R: " << r << endl;
+        if (r<=Region_ratio[0]){Region=1;}                                    // Where 1=Central, 2=Coast, 3=Eastern, 4=Nairobi, 5=North Eastern, 6=Nyanza, 7=Rift Valley, 8=Western
+        else if (r>Region_ratio[0] && r<=Region_ratio[1]){Region=2;}
+        else if (r>Region_ratio[1] && r<=Region_ratio[2]){Region=3;}
+        else if (r>Region_ratio[2] && r<=Region_ratio[3]){Region=4;}
+        else if (r>Region_ratio[3] && r<=Region_ratio[4]){Region=5;}
+        else if (r>Region_ratio[4] && r<=Region_ratio[5]){Region=6;}
+        else if (r>Region_ratio[5] && r<=Region_ratio[6]){Region=7;}
+        else if (r>Region_ratio[7]){Region=8;}
+        
+        cout << "Region " << Region << endl;
+        
+     }
     
     E(cout << "We finished assigning region!" << endl;)
 }
