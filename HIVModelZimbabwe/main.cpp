@@ -151,7 +151,7 @@ int main(){
     
     //// --- Load parameters --- ////
     cout << "Section 1 - We are loading the arrays" << endl;
-    
+    cout << "TESTESTESTEST" << endl;
     // Load HIV Arrays
     loadCD4StartArray();
     loadCD4ProgArray();
