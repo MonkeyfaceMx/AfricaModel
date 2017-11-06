@@ -90,7 +90,7 @@ double Risk_NCDHIV[2]={Risk_HIVHT, Risk_HIVCKD};
 int relatedNCD_HIV[2]={0, 5};
 int nr_NCD_HIV=sizeof(relatedNCD_HIV)/sizeof(relatedNCD_HIV[0]);
 extern int ageAdult;
-//extern double ARTbuffer;
+extern double ARTbuffer;
 
 
 //// Tidy up
@@ -120,7 +120,7 @@ int ART_index=0;
 int HIV_Ref_PersonID[500000]={};
 int countHIVRef=0;
 
-int KIDS_HIV_Ref_PersonID[50000]={};
+int KIDS_HIV_Ref_PersonID[70000]={};
 int countKIDSHIVRef=0;
 
 // Count real available patients for error message
@@ -152,10 +152,11 @@ void EventTellNewYear(person *MyPointerToPerson){
             
             
             if (count_ARTKids<ARTKids[ART_index] ){
-                
-                
+               
                 int a=(RandomMinMax_2(1,countKIDSHIVRef-1));    // Get a random person and update age
                 int i=KIDS_HIV_Ref_PersonID[a]-1;
+                cout << "totalpopulation " << total_population << " a " << a <<  " Kids ref " << KIDS_HIV_Ref_PersonID[a] << endl;
+                cout << "I: " << i << " Age " << MyArrayOfPointersToPeople[i]->Age << " GT " << *p_GT << endl;
                 MyArrayOfPointersToPeople[i]->Age=(*p_GT - MyArrayOfPointersToPeople[i]->DoB);
                 
                 
@@ -215,9 +216,9 @@ void EventTellNewYear(person *MyPointerToPerson){
             
         }
         
-        cout << endl << " we have finished assigning ART KIDS: There have " << Elig_Kids << " eligible kids and we need to reach " << ARTKids[ART_index] << " and only have " << 1.1*count_ARTKids   << endl;
-        cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 20% " << 1.2*count_ARTMen_sum << endl;
-        cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 20% " << 1.2*count_ARTWomen_sum<< endl;
+//        cout << endl << " we have finished assigning ART KIDS: There have " << Elig_Kids << " eligible kids and we need to reach " << ARTKids[ART_index] << " and only have " << count_ARTKids   << endl;
+//        cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 20% " << 1.2*count_ARTMen_sum << endl;
+//        cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 20% " << 1.2*count_ARTWomen_sum<< endl;
         
         // Lets update the ART index
         ART_index++;
@@ -262,6 +263,9 @@ void EventAssignRegionAndHIV(person *MyPointerToPerson){
         (MyArrayOfPointersToPeople[i])->RegionDistribution();
         (MyArrayOfPointersToPeople[i])->GetMyDateOfHIVInfection();
     }
+    cout << "It is now " << *p_GT << " and we have assign region and evaluate date of HIV infection!" << endl;
+    
+    
 }
 
 

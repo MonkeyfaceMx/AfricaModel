@@ -103,11 +103,11 @@ void loadCountryParams(int x){
 
 void getParamsString(int x){
     if (x == 1){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/Rachel - Regions/New_Model_Africa_version2/HIVModelZimbabwe/";
+        ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Rachel - Regions/New_Model_Africa_version2/HIVModelZimbabwe/";
     }
     
     else if (x == 2){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/Rachel - Regions/New_Model_Africa_version2/HIVModelZimbabwe/";
+        ParamDirectory="/Users/pperezgu/Dropbox/Ageing in Kenya and Zimbabwe - project/Rachel - Regions/New_Model_Africa_version2/HIVModelZimbabwe/";
     }
 }
 
