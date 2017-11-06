@@ -26,13 +26,7 @@ extern int ART_start_yr;
 extern int factor;
 extern int ageAdult;
 extern double Sex_ratio;
-//extern double Region_ratio1;
-//extern double Region_ratio2;
-//extern double Region_ratio3;
-//extern double Region_ratio4;
-//extern double Region_ratio5;
-//extern double Region_ratio6;
-//extern double Region_ratio7;
+
 extern double ARTbuffer;
 extern double MortAdj;
 extern double background_d;
@@ -60,13 +54,6 @@ void loadCountryParams(int x){
         ART_start_yr=2004;
         ageAdult=15;
         Sex_ratio=0.495639296;
-//        Region_ratio1=0.1;
-//        Region_ratio2=0.2;
-//        Region_ratio3=0.3;
-//        Region_ratio4=0.4;
-//        Region_ratio5=0.5;
-//        Region_ratio6=0.6;
-//        Region_ratio7=0.7;
         ARTbuffer=1.01;
         MortAdj=1;
         // Mortality percentages from GBD 2016
@@ -114,79 +101,13 @@ void loadCountryParams(int x){
     
 }
 
-void loadRegionParams(int x){
-    if (x==1){                                       // Region 1
-        cout << "You have selected National" << endl;
-        loadHIVArray_Women_National();
-        loadHIVArray_Men_National();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x==2){                                  // Region 2
-        cout << "You have selected Central" << endl;
-        loadHIVArray_Women_Central();
-        loadHIVArray_Men_Central();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x==3){                                  // Region 3
-        cout << "You have selected Coast" << endl;
-        loadHIVArray_Women_Coast();
-        loadHIVArray_Men_Coast();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x ==4){                                 // Region 4
-        cout << "You have selected Eastern" << endl;
-        loadHIVArray_Women_Eastern();
-        loadHIVArray_Men_Eastern();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x==5){                                  // Region 5
-        cout << "You have selected Nairobi" << endl;
-        loadHIVArray_Women_Nairobi();
-        loadHIVArray_Men_Nairobi();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x==6){                                  // Region 6
-        cout << "You have selected North Eastern" << endl;
-        loadHIVArray_Women_NorthEastern();
-        loadHIVArray_Men_NorthEastern();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x==7){                                  // Region 7
-        cout << "You have selected Nyanza" << endl;
-        loadHIVArray_Women_Nyanza();
-        loadHIVArray_Men_Nyanza();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x==8){                                  // Region 8
-        cout << "You have selected Rift Valley" << endl;
-        loadHIVArray_Women_RiftValley();
-        loadHIVArray_Men_RiftValley();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-    else if (x==9){                                  // Region 9
-        cout << "You have selected Western" << endl;
-        loadHIVArray_Women_Western();
-        loadHIVArray_Men_Western();
-        UN_Pop=5909800;
-        init_pop=UN_Pop/factor;
-        total_population=init_pop;}
-}
-
-
 void getParamsString(int x){
     if (x == 1){
-        ParamDirectory="/Users/rcassidy/Documents/Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/Rachel - Regions/New_Model_Africa_version2/HIVModelZimbabwe/";
     }
     
     else if (x == 2){
-        ParamDirectory="/Users/rcassidy/Documents/Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/Rachel - Regions/New_Model_Africa_version2/HIVModelZimbabwe/";
     }
 }
+

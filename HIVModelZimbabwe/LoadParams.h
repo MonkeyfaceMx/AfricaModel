@@ -14,8 +14,6 @@
 void loadBirthArray();								// functions to load arrays
 void loadDeathArray_Women();
 void loadDeathArray_Men();
-void loadHIVArray_Women();
-void loadHIVArray_Men();
 void loadHIVArray_Women_National();
 void loadHIVArray_Men_National();
 void loadHIVArray_Women_Central();

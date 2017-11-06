@@ -18,7 +18,7 @@
 #include "LoadParams.h"
 
 
-double Region_ratio[8]={0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1};
+double Region_ratio[8]={0.14, 0.22, 0.35, 0.50, 0.52, 0.68, 0.90, 1};
 
 //// --- OUTSIDE INFORMATION --- ////
 extern double   *p_GT;
@@ -64,8 +64,8 @@ extern double** HIVArray_Men_RiftValley;
 extern double** HIVArray_Women_Western;
 extern double** HIVArray_Men_Western;
 
-extern double** HIVArray_Women;
-extern double** HIVArray_Men;
+//extern double** HIVArray_Women;
+//extern double** HIVArray_Men;
 extern double** NrChildrenArray;
 extern double*  NrChildrenProb;
 extern double** Age1950Array;
@@ -180,11 +180,9 @@ void person::RegionDistribution(){
     E(cout << "We are assigning region!" << endl;)
     E(cout << "First region" << Region_ratio[0] << " Second region " << Region_ratio[1] << " Third region" << Region_ratio[2] << " Fourth region" << Region_ratio[3] << "Fifth region" << Region_ratio[4] << "Sixth region" << Region_ratio[5] << "Seventh region" << Region_ratio[6] << " Eighth region" << Region_ratio[7] << "Ninth region" << endl;)
     
-    cout << "First region" << Region_ratio[0] << " Second region " << Region_ratio[1] << " Third region" << Region_ratio[2] << " Fourth region" << Region_ratio[3] << "Fifth region" << Region_ratio[4] << "Sixth region" << Region_ratio[5] << "Seventh region" << Region_ratio[6] << " Eighth region" << Region_ratio[7] << "Ninth region" << endl;
-    
     if(Alive == 1) {
         double    r = ((double) rand() / (RAND_MAX)) ;
-        cout << "R: " << r << endl;
+        //cout << "R: " << r << endl;
         if (r<=Region_ratio[0]){Region=1;}                                    // Where 1=Central, 2=Coast, 3=Eastern, 4=Nairobi, 5=North Eastern, 6=Nyanza, 7=Rift Valley, 8=Western
         else if (r>Region_ratio[0] && r<=Region_ratio[1]){Region=2;}
         else if (r>Region_ratio[1] && r<=Region_ratio[2]){Region=3;}
@@ -192,9 +190,9 @@ void person::RegionDistribution(){
         else if (r>Region_ratio[3] && r<=Region_ratio[4]){Region=5;}
         else if (r>Region_ratio[4] && r<=Region_ratio[5]){Region=6;}
         else if (r>Region_ratio[5] && r<=Region_ratio[6]){Region=7;}
-        else if (r>Region_ratio[7]){Region=8;}
+        else if (r>Region_ratio[6]){Region=8;}
         
-        cout << "Region " << Region << endl;
+        //cout << "Region " << Region << endl;
         
      }
     
@@ -412,16 +410,6 @@ void person::GetMyDateOfHIVInfection(){
             if(months<1){YearFraction=0;}
             double	h = ((double)rand() / (RAND_MAX));				// Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
             
-/*           if (Sex==1){
-                if (h>HIVArray_Men[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            } */
             
             if (Sex==1 && Region==1){
                 if (h>HIVArray_Men_Central[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
@@ -444,7 +432,6 @@ void person::GetMyDateOfHIVInfection(){
                 }
             }
             if (Sex==1 && Region==3){
-                cout << "You have selected Eastern" << endl;
                 loadHIVArray_Men_Eastern();
                 if (h>HIVArray_Men_Eastern[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
                 if (h<=HIVArray_Men_Eastern[i][120]){                        // In case they DO get HIV in their life
@@ -456,7 +443,6 @@ void person::GetMyDateOfHIVInfection(){
                 }
             }
             if (Sex==1 && Region==4){
-                cout << "You have selected Nairobi" << endl;
                 loadHIVArray_Men_Nairobi();
                 if (h>HIVArray_Men_Nairobi[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
                 if (h<=HIVArray_Men_Nairobi[i][120]){                        // In case they DO get HIV in their life
@@ -508,18 +494,6 @@ void person::GetMyDateOfHIVInfection(){
                     if (TestHIVDate<1975) {HIV=-989;}
                 }
             }
-
-/*            if (Sex==2){
-                if (h>HIVArray_Women[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            } */
-            
             if (Sex==2 && Region==1){
                 if (h>HIVArray_Women_Central[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
                 if (h<=HIVArray_Women_Central[i][120]){                        // In case they DO get HIV in their life
@@ -590,7 +564,6 @@ void person::GetMyDateOfHIVInfection(){
                     if (TestHIVDate<1975) {HIV=-989;}
                 }
             }
-          
             if (Sex==2 && Region==8){
                 if (h>HIVArray_Women_Western[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
                 if (h<=HIVArray_Women_Western[i][120]){                        // In case they DO get HIV in their life
@@ -602,7 +575,7 @@ void person::GetMyDateOfHIVInfection(){
                 }
             }
             
-
+ //cout << "HIV is " << HIV << endl;
             // Error message:
             if (months>12){cout << "Error 2: There is an error and HIV infection will ocurr in the wrong year: " << months << endl;}
             if (YearFraction>fractionyear){cout << "Error 2: There is an error!" << YearFraction << " and fraction " << fractionyear<< endl;cout << "Global Time "<< *p_GT << " and months " << months << endl;}

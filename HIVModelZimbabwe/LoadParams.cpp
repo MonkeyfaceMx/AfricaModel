@@ -25,8 +25,8 @@ using namespace std;
 double** BirthArray;
 double** DeathArray_Women;
 double** DeathArray_Men;
-double** HIVArray_Women;
-double** HIVArray_Men;
+//double** HIVArray_Women;
+//double** HIVArray_Men;
 double** HIVArray_Women_National;
 double** HIVArray_Men_National;
 double** HIVArray_Women_Central;
@@ -1049,179 +1049,10 @@ void loadDeathArray_Men()
     E(cout << "Mortality array for men has been read in successfully! " << endl;)
 }
 
-///////////////////////////////
-// -- HIV Incidence Women-- //
-///////////////////////////////
 
-void loadHIVArray_Women()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("HIV_incidence_women.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-/////////////////////////////
-// -- HIV Incidence Men -- //
-/////////////////////////////
-
-void loadHIVArray_Men(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("HIV_incidence_men.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-
-    
-
-///////////////////////////////
-// -- HIV Incidence Women National-- //
-///////////////////////////////
-
-void loadHIVArray_Women_National()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile5("HIV_incidence_women.csv");
-
-     // Lets include an error message in case file is not found
-     if (!myfile5.is_open())
-     {
-        cout << "ERROR: The file National Incidence Array Women was not found!" << endl;
-        exit(0);
-     }
-     else if (myfile5.bad())
-     {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-     }
-   
-    // Else lets load the Array
-    E(cout << "File " << &myfile5 << " successfully added" << endl;)
-    HIVArray_Women_National = new double *[201];
-    for (int row = 0; row<201; row++){					// This loop will read in every number to the right place
-        string line;
-        getline(myfile5, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_National[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_National[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-/////////////////////////////
-// -- HIV Incidence Men National-- //
-/////////////////////////////
-
-void loadHIVArray_Men_National(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile6("incidence_men_national.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile6.is_open())
-    {
-        cout << "ERROR: The file National Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile6.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile6 << " successfully added" << endl;)
-    HIVArray_Men_National = new double *[201];
-    for (int row = 0; row<201; row++){					// This loop will read in every number to the right place
-        string line;
-        getline(myfile6, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_National[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_National[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-
-///////////////////////////////
+//////////////////////////////////////
 // -- HIV Incidence Women Central-- //
-///////////////////////////////
+//////////////////////////////////////
 
 void loadHIVArray_Women_Central()
 {
@@ -1261,9 +1092,9 @@ void loadHIVArray_Women_Central()
 
 
 
-/////////////////////////////
+////////////////////////////////////
 // -- HIV Incidence Men Central-- //
-/////////////////////////////
+////////////////////////////////////
 
 void loadHIVArray_Men_Central(){
     
@@ -1303,9 +1134,9 @@ void loadHIVArray_Men_Central(){
 }
 
 
-///////////////////////////////
+////////////////////////////////////
 // -- HIV Incidence Women Coast-- //
-///////////////////////////////
+////////////////////////////////////
 
 void loadHIVArray_Women_Coast()
 {
@@ -1345,9 +1176,9 @@ void loadHIVArray_Women_Coast()
 
 
 
-/////////////////////////////
-// -- HIV Incidence Men Coast-- //
-/////////////////////////////
+////////////////////////////////////
+// --- HIV Incidence Men Coast--- //
+////////////////////////////////////
 
 void loadHIVArray_Men_Coast(){
     
@@ -1387,9 +1218,9 @@ void loadHIVArray_Men_Coast(){
 }
 
 
-///////////////////////////////
+//////////////////////////////////////
 // -- HIV Incidence Women Eastern-- //
-///////////////////////////////
+//////////////////////////////////////
 
 void loadHIVArray_Women_Eastern()
 {
@@ -1429,9 +1260,9 @@ void loadHIVArray_Women_Eastern()
 
 
 
-/////////////////////////////
+////////////////////////////////////
 // -- HIV Incidence Men Eastern-- //
-/////////////////////////////
+////////////////////////////////////
 
 void loadHIVArray_Men_Eastern(){
     
@@ -1471,9 +1302,9 @@ void loadHIVArray_Men_Eastern(){
 }
 
 
-///////////////////////////////
+//////////////////////////////////////
 // -- HIV Incidence Women Nairobi-- //
-///////////////////////////////
+//////////////////////////////////////
 
 void loadHIVArray_Women_Nairobi()
 {
@@ -1513,9 +1344,9 @@ void loadHIVArray_Women_Nairobi()
 
 
 
-/////////////////////////////
+////////////////////////////////////
 // -- HIV Incidence Men Nairobi-- //
-/////////////////////////////
+////////////////////////////////////
 
 void loadHIVArray_Men_Nairobi(){
     
@@ -1554,9 +1385,9 @@ void loadHIVArray_Men_Nairobi(){
     E(cout << "HIV array for men has been read in successfully! " << endl;)
 }
 
-///////////////////////////////
+////////////////////////////////////////////
 // -- HIV Incidence Women North Eastern-- //
-///////////////////////////////
+////////////////////////////////////////////
 
 void loadHIVArray_Women_NorthEastern()
 {
@@ -1596,9 +1427,9 @@ void loadHIVArray_Women_NorthEastern()
 
 
 
-/////////////////////////////
+//////////////////////////////////////////
 // -- HIV Incidence Men North Eastern-- //
-/////////////////////////////
+//////////////////////////////////////////
 
 void loadHIVArray_Men_NorthEastern(){
     
@@ -1637,9 +1468,9 @@ void loadHIVArray_Men_NorthEastern(){
     E(cout << "HIV array for men has been read in successfully! " << endl;)
 }
 
-///////////////////////////////
+/////////////////////////////////////
 // -- HIV Incidence Women Nyanza-- //
-///////////////////////////////
+/////////////////////////////////////
 
 void loadHIVArray_Women_Nyanza()
 {
@@ -1679,9 +1510,9 @@ void loadHIVArray_Women_Nyanza()
 
 
 
-/////////////////////////////
+///////////////////////////////////
 // -- HIV Incidence Men Nyanza-- //
-/////////////////////////////
+///////////////////////////////////
 
 void loadHIVArray_Men_Nyanza(){
     
@@ -1720,9 +1551,9 @@ void loadHIVArray_Men_Nyanza(){
     E(cout << "HIV array for men has been read in successfully! " << endl;)
 }
 
-///////////////////////////////
+//////////////////////////////////////////
 // -- HIV Incidence Women Rift Valley-- //
-///////////////////////////////
+//////////////////////////////////////////
 
 void loadHIVArray_Women_RiftValley()
 {
@@ -1762,9 +1593,9 @@ void loadHIVArray_Women_RiftValley()
 
 
 
-/////////////////////////////
+////////////////////////////////////////
 // -- HIV Incidence Men Rift Valley-- //
-/////////////////////////////
+////////////////////////////////////////
 
 void loadHIVArray_Men_RiftValley(){
     
@@ -1803,9 +1634,9 @@ void loadHIVArray_Men_RiftValley(){
     E(cout << "HIV array for men has been read in successfully! " << endl;)
 }
 
-///////////////////////////////
+//////////////////////////////////////
 // -- HIV Incidence Women Western-- //
-///////////////////////////////
+//////////////////////////////////////
 
 void loadHIVArray_Women_Western()
 {
@@ -1845,9 +1676,9 @@ void loadHIVArray_Women_Western()
 
 
 
-/////////////////////////////
+////////////////////////////////////
 // -- HIV Incidence Men Western-- //
-/////////////////////////////
+////////////////////////////////////
 
 void loadHIVArray_Men_Western(){
     

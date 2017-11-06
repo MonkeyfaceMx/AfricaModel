@@ -34,12 +34,8 @@ using namespace std;
 // 1=KENYA      2=ZIMBABWE      3=MALAWI
 int country=1;
 
-// STEP 1 --- SELECT THE COUNTRY TO RUN THE MODEL
-// 1=COUNTRYWIDE      2=REGION 1      3=REGION 2
-//int region=1;
-
 // STEP 2 --- NAME THE DIRECTORY AND TAG FOR THE OUTPUT FILE
-string OutputFileDirectory="/Users/rcassidy/Documents/Latest.csv";
+string OutputFileDirectory="/Users/rcassidy/Dropbox/Latest.csv";
 
 /// STEP 3 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
 int factor=100;
@@ -71,14 +67,6 @@ int         UN_Pop;                                                             
 int         init_pop;                                                                                           //////////
 int         total_population;                                                                                   //////////
 double      Sex_ratio;
-//extern double Region_ratio;
-//extern double Region_ratio1;
-//extern double Region_ratio2;
-//extern double Region_ratio3;
-//extern double Region_ratio4;
-//extern double Region_ratio5;
-//extern double Region_ratio6;
-//extern double Region_ratio7;                                                                                      //////////
 int         ageAdult;                                                                                           //////////
 double      ARTbuffer;                                                                                          //////////
 double      MortAdj;                                                                                            //////////
@@ -140,7 +128,6 @@ int main(){
     
     // Call the function that loads country-specific parameters
     loadCountryParams(country);
-    //loadRegionParams(region);
     cout << "Population was of " << UN_Pop << " in 1950, with a sex ratio of " << Sex_ratio << ", per UN estimates." << endl;
     cout << "Model calibrated to: 1) Run at a " << factor << "th of the population (N=" << init_pop << "); 2) Adult = "
     << ageAdult << " years of age on; 3) Mortality adjustment = "
@@ -151,7 +138,6 @@ int main(){
     
     //// --- Load parameters --- ////
     cout << "Section 1 - We are loading the arrays" << endl;
-    cout << "TESTESTESTEST" << endl;
     // Load HIV Arrays
     loadCD4StartArray();
     loadCD4ProgArray();
@@ -176,8 +162,6 @@ int main(){
     loadBirthArray();
     loadDeathArray_Women();
     loadDeathArray_Men();
-    //loadHIVArray_Women();
-    //loadHIVArray_Men();
     loadHIVArray_Women_Central();
     loadHIVArray_Men_Central();
     loadHIVArray_Women_Coast();
@@ -240,8 +224,6 @@ int main(){
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
     }
     
-    ///// --- Assign region in 1970 ---- /////
-    
     
     cout << "Section 4 - We've finished creating a population" << endl;
     
@@ -281,7 +263,7 @@ int main(){
     
     
     for (int i=0; i<total_population; i++) {								// Note: If adding more variables to be output, need to adapt the %x
-        fprintf(ProjectZim,"%d, %d, %f, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, \n",
+        fprintf(ProjectZim,"%d, %d, %f, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %d, \n",
                 MyArrayOfPointersToPeople[i]->PersonID,
                 MyArrayOfPointersToPeople[i]->Sex,
                 MyArrayOfPointersToPeople[i]->Region,
@@ -316,7 +298,8 @@ int main(){
                 MyArrayOfPointersToPeople[i]->Oeso,
                 MyArrayOfPointersToPeople[i]->Prostate,
                 MyArrayOfPointersToPeople[i]->OtherCan,
-                MyArrayOfPointersToPeople[i]->Stroke_status             // Check if used and, if not, remove
+                MyArrayOfPointersToPeople[i]->Stroke_status,             // Check if used and, if not, remove
+                MyArrayOfPointersToPeople[i]->Region
                 
                 );}
     fclose(ProjectZim);

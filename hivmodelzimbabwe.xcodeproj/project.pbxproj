@@ -37,7 +37,6 @@
 		692999951FA228A9005AA95A /* incidence_women_northeastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_northeastern.csv; sourceTree = "<group>"; };
 		692999961FA228A9005AA95A /* incidence_men_eastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_eastern.csv; sourceTree = "<group>"; };
 		692999971FA228A9005AA95A /* incidence_women_nairobi.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_nairobi.csv; sourceTree = "<group>"; };
-		692999981FA228A9005AA95A /* incidence_women_national.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_national.csv; sourceTree = "<group>"; };
 		692999991FA228A9005AA95A /* incidence_women_central.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_central.csv; sourceTree = "<group>"; };
 		6929999A1FA228A9005AA95A /* incidence_women_coast.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_coast.csv; sourceTree = "<group>"; };
 		6929999B1FA228AA005AA95A /* incidence_women_nyanza.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_nyanza.csv; sourceTree = "<group>"; };
@@ -45,7 +44,6 @@
 		6929999D1FA228AA005AA95A /* incidence_men_central.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_central.csv; sourceTree = "<group>"; };
 		6929999E1FA228AA005AA95A /* incidence_men_nyanza.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_nyanza.csv; sourceTree = "<group>"; };
 		6929999F1FA228AA005AA95A /* incidence_men_western.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_western.csv; sourceTree = "<group>"; };
-		692999A01FA228AA005AA95A /* incidence_men_national.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_national.csv; sourceTree = "<group>"; };
 		692999A11FA228AA005AA95A /* incidence_women_western.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_western.csv; sourceTree = "<group>"; };
 		692999A21FA228AA005AA95A /* incidence_women_eastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_eastern.csv; sourceTree = "<group>"; };
 		692999A31FA228AB005AA95A /* incidence_men_northeastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_northeastern.csv; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 				692999A41FA228AB005AA95A /* incidence_men_coast.csv */,
 				692999961FA228A9005AA95A /* incidence_men_eastern.csv */,
 				6929999C1FA228AA005AA95A /* incidence_men_nairobi.csv */,
-				692999A01FA228AA005AA95A /* incidence_men_national.csv */,
 				692999A31FA228AB005AA95A /* incidence_men_northeastern.csv */,
 				6929999E1FA228AA005AA95A /* incidence_men_nyanza.csv */,
 				692999931FA228A9005AA95A /* incidence_men_riftvalley.csv */,
@@ -132,7 +129,6 @@
 				6929999A1FA228A9005AA95A /* incidence_women_coast.csv */,
 				692999A21FA228AA005AA95A /* incidence_women_eastern.csv */,
 				692999971FA228A9005AA95A /* incidence_women_nairobi.csv */,
-				692999981FA228A9005AA95A /* incidence_women_national.csv */,
 				692999951FA228A9005AA95A /* incidence_women_northeastern.csv */,
 				6929999B1FA228AA005AA95A /* incidence_women_nyanza.csv */,
 				692999941FA228A9005AA95A /* incidence_women_riftvalley.csv */,

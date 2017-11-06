@@ -90,7 +90,7 @@ double Risk_NCDHIV[2]={Risk_HIVHT, Risk_HIVCKD};
 int relatedNCD_HIV[2]={0, 5};
 int nr_NCD_HIV=sizeof(relatedNCD_HIV)/sizeof(relatedNCD_HIV[0]);
 extern int ageAdult;
-extern double ARTbuffer;
+//extern double ARTbuffer;
 
 
 //// Tidy up
@@ -102,13 +102,6 @@ int nr_NCD_Diab=sizeof(relatedNCDs_Diab)/sizeof(relatedNCDs_Diab[0]);
 double Risk_NCD_HT[2]={Risk_HTCVD, Risk_HTCKD};
 int relatedNCDs_HT[2]={3, 5};
 int nr_NCD_HT=sizeof(relatedNCDs_HT)/sizeof(relatedNCDs_HT[0]);
-
-
-
-// Parameters sums (sums of above arrays (across CD4 count - total for year)
-//int ARTMen_sum[13] =  {55, 174, 384, 635, 877, 1200, 1554, 1852, 1852, 1916, 2072, 2451, 2451};
-//int ARTWomen_sum[13]= {70, 221, 489, 808, 1116, 1530, 2007, 2743, 3429, 3808, 4405, 5183, 5183};
-
 
 
 // Count to compare to sum and CD4-specific numbers
@@ -222,9 +215,9 @@ void EventTellNewYear(person *MyPointerToPerson){
             
         }
         
-        cout << endl << " we have finished assigning ART KIDS: There have " << Elig_Kids << " eligible kids and we need to reach " << ARTKids[ART_index] << " and only have " << count_ARTKids   << endl;
-        cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 10% " << 1.2*count_ARTMen_sum << endl;
-        cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 10% " << 1.2*count_ARTWomen_sum<< endl;
+        cout << endl << " we have finished assigning ART KIDS: There have " << Elig_Kids << " eligible kids and we need to reach " << ARTKids[ART_index] << " and only have " << 1.1*count_ARTKids   << endl;
+        cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 20% " << 1.2*count_ARTMen_sum << endl;
+        cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 20% " << 1.2*count_ARTWomen_sum<< endl;
         
         // Lets update the ART index
         ART_index++;
@@ -265,7 +258,7 @@ void EventTellNewYear(person *MyPointerToPerson){
 void EventAssignRegionAndHIV(person *MyPointerToPerson){
     cout << "It is now " << *p_GT << " lets assign region and evaluate date of HIV infection!" << endl;
     for(int i=0; i<total_population; i++) {
-        cout << "I " << i << " person index " << MyArrayOfPointersToPeople[i]->PersonID << endl;
+        //cout << "I " << i << " person index " << MyArrayOfPointersToPeople[i]->PersonID << endl;
         (MyArrayOfPointersToPeople[i])->RegionDistribution();
         (MyArrayOfPointersToPeople[i])->GetMyDateOfHIVInfection();
     }
