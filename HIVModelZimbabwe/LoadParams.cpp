@@ -1033,7 +1033,7 @@ void loadDeathArray_Men()
 
 
 //////////////////////////////////////
-// -- HIV Incidence Women Central-- //
+// -- HIV Incidence Women-- //
 //////////////////////////////////////
 
 void loadHIVArray_Women()
@@ -1075,7 +1075,7 @@ void loadHIVArray_Women()
 
 
 ////////////////////////////////////
-// -- HIV Incidence Men Central-- //
+// -- HIV Incidence Men-- //
 ////////////////////////////////////
 
 void loadHIVArray_Men(){
