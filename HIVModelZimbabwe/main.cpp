@@ -31,11 +31,11 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // STEP 1 --- SELECT THE COUNTRY TO RUN THE MODEL
-// 1=KENYA      2=ZIMBABWE      3=MALAWI
+// 1=KENYA      2=ZIMBABWE      3=MALAWI      4=ELDORET
 int country=1;
 
 // STEP 2 --- NAME THE DIRECTORY AND TAG FOR THE OUTPUT FILE
-string OutputFileDirectory="/Users/pperezgu/Dropbox/Latest.csv";
+string OutputFileDirectory="/Users/rcassidy/Dropbox/Latest.csv";
 
 /// STEP 3 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
 int factor=100;
@@ -47,8 +47,6 @@ double StartYear=1950;                                                          
 int EndYear=2035;                                                                                               //////////
 const long long int final_number_people=100000000;                                                              //////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -162,22 +160,8 @@ int main(){
     loadBirthArray();
     loadDeathArray_Women();
     loadDeathArray_Men();
-    loadHIVArray_Women_Central();
-    loadHIVArray_Men_Central();
-    loadHIVArray_Women_Coast();
-    loadHIVArray_Men_Coast();
-    loadHIVArray_Women_Eastern();
-    loadHIVArray_Men_Eastern();
-    loadHIVArray_Women_Nairobi();
-    loadHIVArray_Men_Nairobi();
-    loadHIVArray_Women_NorthEastern();
-    loadHIVArray_Men_NorthEastern();
-    loadHIVArray_Women_Nyanza();
-    loadHIVArray_Men_Nyanza();
-    loadHIVArray_Women_RiftValley();
-    loadHIVArray_Men_RiftValley();
-    loadHIVArray_Women_Western();
-    loadHIVArray_Men_Western();
+    loadHIVArray_Women();
+    loadHIVArray_Men();
     loadNCDArray();
     loadCancerArray();
     
@@ -222,6 +206,7 @@ int main(){
         if (MyArrayOfPointersToPeople[i]->Sex == 2 && MyArrayOfPointersToPeople[i]->Age<50 && MyArrayOfPointersToPeople[i]->AgeAtDeath>=15) {(MyArrayOfPointersToPeople[i])->GetDateOfBaby();}              // --- Assign Birth of all Children- ---
         (MyArrayOfPointersToPeople[i])->GetMyDateNCD();                     // --- Get date of NCDs ---
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHIVInfection();           // ---Get date of HIV infection ---
     }
     
     
@@ -236,13 +221,7 @@ int main(){
     TellNewYear->time = StartYear;
     TellNewYear->p_fun = &EventTellNewYear;
     iQ.push(TellNewYear);
-    
-    event * Its1970 = new event;                                        // --- Tell me every time  a new year start ---
-    Events.push_back(Its1970);
-    Its1970->time = 1970;
-    Its1970->p_fun = &EventAssignRegionAndHIV;
-    iQ.push(Its1970);
-    
+
     
     //// --- LETS RUN THE EVENTQ --- ////
     cout << endl << endl << "The characteristics of the event queue:" << endl;
@@ -263,7 +242,7 @@ int main(){
     
     
     for (int i=0; i<total_population; i++) {								// Note: If adding more variables to be output, need to adapt the %x
-        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f \n",
+        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d \n",
                 MyArrayOfPointersToPeople[i]->PersonID,
                 MyArrayOfPointersToPeople[i]->Sex,
                 MyArrayOfPointersToPeople[i]->DoB,
@@ -297,8 +276,7 @@ int main(){
                 MyArrayOfPointersToPeople[i]->Oeso,
                 MyArrayOfPointersToPeople[i]->Prostate,
                 MyArrayOfPointersToPeople[i]->OtherCan,
-                MyArrayOfPointersToPeople[i]->Stroke_status,             // Check if used and, if not, remove
-                MyArrayOfPointersToPeople[i]->Region
+                MyArrayOfPointersToPeople[i]->Stroke_status             // Check if used and, if not, remove
                 
                 );}
     fclose(ProjectZim);

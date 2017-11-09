@@ -146,17 +146,17 @@ void EventTellNewYear(person *MyPointerToPerson){
         // Add people on ART until we hit our aim
         while (count_ARTKids<ARTKids[ART_index] || ARTbuffer*count_ARTMen_sum<ARTMen_sum[ART_index] || ARTbuffer*count_ARTWomen_sum<ARTWomen_sum[ART_index]){
             
-            cout << endl << "Its " << *p_GT << " KIDS: There have " << Elig_Kids << " eligible kids and we need to reach " << ARTKids[ART_index] << " and only have " << count_ARTKids   << endl;
-            cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 10% " << ARTbuffer*count_ARTMen_sum << endl;
-            cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 10% " << ARTbuffer*count_ARTWomen_sum<< endl;
+            //cout << endl << "Its " << *p_GT << " KIDS: There have " << Elig_Kids << " eligible kids and we need to reach " << ARTKids[ART_index] << " and only have " << count_ARTKids   << endl;
+            //cout << "Men: There have " << Elig_Men << " eligible men and we need to reach " << ARTMen_sum[ART_index] << " and only have " << count_ARTMen_sum << " times 10% " << ARTbuffer*count_ARTMen_sum << endl;
+            //cout << "Women: There have " << Elig_Women << " eligible women and we need to reach " << ARTWomen_sum[ART_index] << " and only have " << count_ARTWomen_sum << " times 10% " << ARTbuffer*count_ARTWomen_sum<< endl;
             
             
             if (count_ARTKids<ARTKids[ART_index] ){
                
                 int a=(RandomMinMax_2(1,countKIDSHIVRef-1));    // Get a random person and update age
                 int i=KIDS_HIV_Ref_PersonID[a]-1;
-                cout << "totalpopulation " << total_population << " a " << a <<  " Kids ref " << KIDS_HIV_Ref_PersonID[a] << endl;
-                cout << "I: " << i << " Age " << MyArrayOfPointersToPeople[i]->Age << " GT " << *p_GT << endl;
+                //cout << "totalpopulation " << total_population << " a " << a <<  " Kids ref " << KIDS_HIV_Ref_PersonID[a] << endl;
+                //cout << "I: " << i << " Age " << MyArrayOfPointersToPeople[i]->Age << " GT " << *p_GT << endl;
                 MyArrayOfPointersToPeople[i]->Age=(*p_GT - MyArrayOfPointersToPeople[i]->DoB);
                 
                 
@@ -252,22 +252,6 @@ void EventTellNewYear(person *MyPointerToPerson){
     
     E(cout << "We have finished telling you the new year and setting fertility variables for the year." << endl;)	// Error message - can be switched on/off
 }
-
-
-//// --- When 1970 starts assign Region and HIV infection date --- ///
-
-void EventAssignRegionAndHIV(person *MyPointerToPerson){
-    cout << "It is now " << *p_GT << " lets assign region and evaluate date of HIV infection!" << endl;
-    for(int i=0; i<total_population; i++) {
-        //cout << "I " << i << " person index " << MyArrayOfPointersToPeople[i]->PersonID << endl;
-        (MyArrayOfPointersToPeople[i])->RegionDistribution();
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHIVInfection();
-    }
-    cout << "It is now " << *p_GT << " and we have assign region and evaluate date of HIV infection!" << endl;
-    
-    
-}
-
 
 //// --- ART Category switch from Kids to Adult --- ////
 void EventARTCatSwitch(person *MyPointerToPerson){
@@ -387,11 +371,8 @@ void EventBirth(person *MyPointerToPerson){
         (MyArrayOfPointersToPeople[total_population-1])->GetDateOfBaby();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateNCD();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateCancers();
-        
-        if (*p_GT>=1970){
-            (MyArrayOfPointersToPeople[total_population-1])->RegionDistribution();
-            (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHIVInfection();
-        }
+        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHIVInfection();
+    
         
         
         // Link Mother and Child

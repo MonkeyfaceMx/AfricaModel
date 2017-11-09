@@ -25,26 +25,8 @@ using namespace std;
 double** BirthArray;
 double** DeathArray_Women;
 double** DeathArray_Men;
-//double** HIVArray_Women;
-//double** HIVArray_Men;
-double** HIVArray_Women_National;
-double** HIVArray_Men_National;
-double** HIVArray_Women_Central;
-double** HIVArray_Men_Central;
-double** HIVArray_Women_Coast;
-double** HIVArray_Men_Coast;
-double** HIVArray_Women_Eastern;
-double** HIVArray_Men_Eastern;
-double** HIVArray_Women_Nairobi;
-double** HIVArray_Men_Nairobi;
-double** HIVArray_Women_NorthEastern;
-double** HIVArray_Men_NorthEastern;
-double** HIVArray_Women_Nyanza;
-double** HIVArray_Men_Nyanza;
-double** HIVArray_Women_RiftValley;
-double** HIVArray_Men_RiftValley;
-double** HIVArray_Women_Western;
-double** HIVArray_Men_Western;
+double** HIVArray_Women;
+double** HIVArray_Men;
 double** NCDArray;
 double** CancerArray;
 
@@ -1054,15 +1036,15 @@ void loadDeathArray_Men()
 // -- HIV Incidence Women Central-- //
 //////////////////////////////////////
 
-void loadHIVArray_Women_Central()
+void loadHIVArray_Women()
 {
     E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile5("incidence_women_central.csv");
+    ifstream myfile5("HIV_incidence_women.csv");
     
     // Lets include an error message in case file is not found
     if (!myfile5.is_open())
     {
-        cout << "ERROR: The file Central Incidence Array Women was not found!" << endl;
+        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
         exit(0);
     }
     else if (myfile5.bad())
@@ -1073,18 +1055,18 @@ void loadHIVArray_Women_Central()
     
     // Else lets load the Array
     E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_Central = new double *[201];
+    HIVArray_Women = new double *[201];
     for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
         string line;
         getline(myfile5, line);
         stringstream iss(line);
         
-        HIVArray_Women_Central[row]=new double[121];
+        HIVArray_Women[row]=new double[121];
         for (int col = 0; col<121; col++){
             string val;
             getline (iss, val, ',');
             stringstream convertor(val);
-            convertor >>  HIVArray_Women_Central[row][col];
+            convertor >>  HIVArray_Women[row][col];
         }
     }
     E(cout << "HIV array for women has been read in successfully! " << endl;)
@@ -1096,94 +1078,10 @@ void loadHIVArray_Women_Central()
 // -- HIV Incidence Men Central-- //
 ////////////////////////////////////
 
-void loadHIVArray_Men_Central(){
+void loadHIVArray_Men(){
     
     E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_central.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Central Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_Central = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_Central[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_Central[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-
-////////////////////////////////////
-// -- HIV Incidence Women Coast-- //
-////////////////////////////////////
-
-void loadHIVArray_Women_Coast()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("incidence_women_coast.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_Coast = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_Coast[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_Coast[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-////////////////////////////////////
-// --- HIV Incidence Men Coast--- //
-////////////////////////////////////
-
-void loadHIVArray_Men_Coast(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_coast.csv");
+    ifstream myfile4("HIV_incidence_men.csv");
     
     
     // Lets include an error message in case file is not found
@@ -1200,523 +1098,19 @@ void loadHIVArray_Men_Coast(){
     
     // Else lets load the Array
     E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_Coast = new double *[201];
+    HIVArray_Men = new double *[201];
     for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
         string line;
         getline(myfile4, line);
         stringstream iss(line);
         
-        HIVArray_Men_Coast[row]=new double[121];
+        HIVArray_Men[row]=new double[121];
         for (int col = 0; col<121; col++){
             string val;
             getline (iss, val, ',');
             stringstream convertor(val);
-            convertor >>  HIVArray_Men_Coast[row][col];
+            convertor >>  HIVArray_Men[row][col];
         }
     }
     E(cout << "HIV array for men has been read in successfully! " << endl;)
 }
-
-
-//////////////////////////////////////
-// -- HIV Incidence Women Eastern-- //
-//////////////////////////////////////
-
-void loadHIVArray_Women_Eastern()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("incidence_women_eastern.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_Eastern = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_Eastern[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_Eastern[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-////////////////////////////////////
-// -- HIV Incidence Men Eastern-- //
-////////////////////////////////////
-
-void loadHIVArray_Men_Eastern(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_eastern.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_Eastern = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_Eastern[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_Eastern[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-
-//////////////////////////////////////
-// -- HIV Incidence Women Nairobi-- //
-//////////////////////////////////////
-
-void loadHIVArray_Women_Nairobi()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("incidence_women_nairobi.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_Nairobi = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_Nairobi[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_Nairobi[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-////////////////////////////////////
-// -- HIV Incidence Men Nairobi-- //
-////////////////////////////////////
-
-void loadHIVArray_Men_Nairobi(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_nairobi.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_Nairobi = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_Nairobi[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_Nairobi[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-////////////////////////////////////////////
-// -- HIV Incidence Women North Eastern-- //
-////////////////////////////////////////////
-
-void loadHIVArray_Women_NorthEastern()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("incidence_women_northeastern.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_NorthEastern = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_NorthEastern[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_NorthEastern[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-//////////////////////////////////////////
-// -- HIV Incidence Men North Eastern-- //
-//////////////////////////////////////////
-
-void loadHIVArray_Men_NorthEastern(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_northeastern.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_NorthEastern = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_NorthEastern[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_NorthEastern[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-/////////////////////////////////////
-// -- HIV Incidence Women Nyanza-- //
-/////////////////////////////////////
-
-void loadHIVArray_Women_Nyanza()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("incidence_women_nyanza.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_Nyanza = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_Nyanza[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_Nyanza[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-///////////////////////////////////
-// -- HIV Incidence Men Nyanza-- //
-///////////////////////////////////
-
-void loadHIVArray_Men_Nyanza(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_nyanza.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_Nyanza = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_Nyanza[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_Nyanza[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-//////////////////////////////////////////
-// -- HIV Incidence Women Rift Valley-- //
-//////////////////////////////////////////
-
-void loadHIVArray_Women_RiftValley()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("incidence_women_riftvalley.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_RiftValley = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_RiftValley[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_RiftValley[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-////////////////////////////////////////
-// -- HIV Incidence Men Rift Valley-- //
-////////////////////////////////////////
-
-void loadHIVArray_Men_RiftValley(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_riftvalley.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_RiftValley = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_RiftValley[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_RiftValley[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-//////////////////////////////////////
-// -- HIV Incidence Women Western-- //
-//////////////////////////////////////
-
-void loadHIVArray_Women_Western()
-{
-    E(cout << "Lets load the HIV array for women.  " << endl;)
-    ifstream myfile3("incidence_women_western.csv");
-    
-    // Lets include an error message in case file is not found
-    if (!myfile3.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Women was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile3.bad())
-    {
-        cout << "ERROR: The file Incidence Array Women was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile3 << " successfully added" << endl;)
-    HIVArray_Women_Western = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile3, line);
-        stringstream iss(line);
-        
-        HIVArray_Women_Western[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Women_Western[row][col];
-        }
-    }
-    E(cout << "HIV array for women has been read in successfully! " << endl;)
-}
-
-
-
-////////////////////////////////////
-// -- HIV Incidence Men Western-- //
-////////////////////////////////////
-
-void loadHIVArray_Men_Western(){
-    
-    E(cout << "Lets load the HIV array for men.  " << endl;)
-    ifstream myfile4("incidence_men_western.csv");
-    
-    
-    // Lets include an error message in case file is not found
-    if (!myfile4.is_open())
-    {
-        cout << "ERROR: The file Incidence Array Men was not found!" << endl;
-        exit(0);
-    }
-    else if (myfile4.bad())
-    {
-        cout << "ERROR: The file Incidence Array Men was bad!" << endl;
-        exit(0);
-    }
-    
-    // Else lets load the Array
-    E(cout << "File " << &myfile4 << " successfully added" << endl;)
-    HIVArray_Men_Western = new double *[201];
-    for (int row = 0; row<201; row++){                    // This loop will read in every number to the right place
-        string line;
-        getline(myfile4, line);
-        stringstream iss(line);
-        
-        HIVArray_Men_Western[row]=new double[121];
-        for (int col = 0; col<121; col++){
-            string val;
-            getline (iss, val, ',');
-            stringstream convertor(val);
-            convertor >>  HIVArray_Men_Western[row][col];
-        }
-    }
-    E(cout << "HIV array for men has been read in successfully! " << endl;)
-}
-
-
-
-

@@ -17,10 +17,6 @@
 #include "eventQ.h"
 #include "LoadParams.h"
 
-
-double Region_ratio[8]={0.14, 0.22, 0.35, 0.50, 0.52, 0.68, 0.90, 1};
-//double Region_ratio[8]={1, 1.22, 1.35, 1.50, 1.52, 1.68, 1.90, 2};
-
 //// --- OUTSIDE INFORMATION --- ////
 extern double   *p_GT;
 extern double   StartYear;
@@ -38,27 +34,8 @@ extern double** BirthArray;
 extern double** DeathArray_Women;
 extern double** DeathArray_Men;
 
-extern double** HIVArray_Women_National;
-extern double** HIVArray_Men_National;
-extern double** HIVArray_Women_Central;
-extern double** HIVArray_Men_Central;
-extern double** HIVArray_Women_Coast;
-extern double** HIVArray_Men_Coast;
-extern double** HIVArray_Women_Eastern;
-extern double** HIVArray_Men_Eastern;
-extern double** HIVArray_Women_Nairobi;
-extern double** HIVArray_Men_Nairobi;
-extern double** HIVArray_Women_NorthEastern;
-extern double** HIVArray_Men_NorthEastern;
-extern double** HIVArray_Women_Nyanza;
-extern double** HIVArray_Men_Nyanza;
-extern double** HIVArray_Women_RiftValley;
-extern double** HIVArray_Men_RiftValley;
-extern double** HIVArray_Women_Western;
-extern double** HIVArray_Men_Western;
-
-//extern double** HIVArray_Women;
-//extern double** HIVArray_Men;
+extern double** HIVArray_Women;
+extern double** HIVArray_Men;
 extern double** NrChildrenArray;
 extern double*  NrChildrenProb;
 extern double** Age1950Array;
@@ -89,7 +66,6 @@ person::person()											// First 'person' class second constructor/variable a
 {
     PersonID=0;												// --- Basic variable ---
     Sex=-999;
-    Region=999;
     
     DoB=-999;												// -- Variables related to age --
     Age=-999;
@@ -166,35 +142,6 @@ void person::GenderDistribution(){
     
     E(cout << "We finished assigning gender!" << endl;)
 }
-
-// --- Assign Region Distribution ---
-void person::RegionDistribution(){
-    
-    E(cout << "We are assigning region!" << endl;)
-    E(cout << "First region" << Region_ratio[0] << " Second region " << Region_ratio[1] << " Third region" << Region_ratio[2] << " Fourth region" << Region_ratio[3] << "Fifth region" << Region_ratio[4] << "Sixth region" << Region_ratio[5] << "Seventh region" << Region_ratio[6] << " Eighth region" << Region_ratio[7] << "Ninth region" << endl;)
-    
-    if(Alive == 1) {
-        double    r = ((double) rand() / (RAND_MAX)) ;
-        //cout << "R: " << r << endl;
-        if (r<=Region_ratio[0]){Region=1;}                                    // Where 1=Central, 2=Coast, 3=Eastern, 4=Nairobi, 5=North Eastern, 6=Nyanza, 7=Rift Valley, 8=Western
-        else if (r>Region_ratio[0] && r<=Region_ratio[1]){Region=2;}
-        else if (r>Region_ratio[1] && r<=Region_ratio[2]){Region=3;}
-        else if (r>Region_ratio[2] && r<=Region_ratio[3]){Region=4;}
-        else if (r>Region_ratio[3] && r<=Region_ratio[4]){Region=5;}
-        else if (r>Region_ratio[4] && r<=Region_ratio[5]){Region=6;}
-        else if (r>Region_ratio[5] && r<=Region_ratio[6]){Region=7;}
-        else if (r>Region_ratio[6]){Region=8;}
-        else {Region=99; cout << "We have an error!" << endl;}
-        
-        //cout << "Region " << Region << endl;
-        
-     }
-    
-    E(cout << "We finished assigning region!" << endl;)
-}
-
-
-
 
 // --- Assign Year Of Birth, Age, etc ---
 void person::GetMyDoB(){
@@ -405,10 +352,10 @@ void person::GetMyDateOfHIVInfection(){
             if(months<1){YearFraction=0;}
             double	h = ((double)rand() / (RAND_MAX));				// Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
             
-            if (Sex==1 && Region==1){
-                if (h>HIVArray_Men_Central[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_Central[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_Central[i][j] && j<121){j++;}
+            if (Sex==1){
+                if (h>HIVArray_Men[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
+                if (h<=HIVArray_Men[i][120]){                        // In case they DO get HIV in their life
+                    while(h>HIVArray_Men[i][j] && j<121){j++;}
                     TestHIVDate=(DoB+j)+YearFraction;
                     if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
                     if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
@@ -416,166 +363,11 @@ void person::GetMyDateOfHIVInfection(){
                 }
             }
             
-            else if (Sex==2 && Region==1){
-                if (h>HIVArray_Women_Central[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_Central[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_Central[i][j] && j<121){j++;}
+            else if (Sex==2){
+                if (h>HIVArray_Women[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
+                if (h<=HIVArray_Women[i][120]){                        // In case they DO get HIV in their life
+                    while(h>HIVArray_Women[i][j] && j<121){j++;}
                     TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==1 && Region==2){
-                if (h>HIVArray_Men_Coast[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_Coast[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_Coast[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==2 && Region==2){
-                if (h>HIVArray_Women_Coast[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_Coast[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_Coast[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==1 && Region==3){
-                if (h>HIVArray_Men_Eastern[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_Eastern[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_Eastern[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==2 && Region==3){
-                if (h>HIVArray_Women_Eastern[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_Eastern[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_Eastern[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-
-            else if (Sex==1 && Region==4){
-                if (h>HIVArray_Men_Nairobi[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_Nairobi[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_Nairobi[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==2 && Region==4){
-                if (h>HIVArray_Women_Nairobi[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_Nairobi[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_Nairobi[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==1 && Region==5){
-                if (h>HIVArray_Men_NorthEastern[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_NorthEastern[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_NorthEastern[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==2 && Region==5){
-                if (h>HIVArray_Women_NorthEastern[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_NorthEastern[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_NorthEastern[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==1 && Region==6){
-                if (h>HIVArray_Men_Nyanza[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_Nyanza[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_Nyanza[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==2 && Region==6){
-                if (h>HIVArray_Women_Nyanza[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_Nyanza[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_Nyanza[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==1 && Region==7){
-                if (h>HIVArray_Men_RiftValley[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_RiftValley[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_RiftValley[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-            
-            else if (Sex==2 && Region==7){
-                if (h>HIVArray_Women_RiftValley[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_RiftValley[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_RiftValley[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
-
-            else if (Sex==1 && Region==8){
-                if (h>HIVArray_Men_Western[i][120]){HIV=-988;}                // In case they do NOT get HIV ever
-                if (h<=HIVArray_Men_Western[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Men_Western[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j)+YearFraction;
-                    if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
-                    if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
-                    if (TestHIVDate<1975) {HIV=-989;}
-                }
-            }
- 
- 
-            else if (Sex==2 && Region==8){
-                if (h>HIVArray_Women_Western[i][120]){HIV=-988;}            // In case they do NOT get HIV ever
-                if (h<=HIVArray_Women_Western[i][120]){                        // In case they DO get HIV in their life
-                    while(h>HIVArray_Women_Western[i][j] && j<121){j++;}
-                    TestHIVDate=(DoB+j);
                     if (TestHIVDate<DateOfDeath && TestHIVDate>=1975){HIV=TestHIVDate;}
                     if (TestHIVDate>=DateOfDeath && TestHIVDate>=1975) {HIV=-977;}
                     if (TestHIVDate<1975) {HIV=-989;}
@@ -584,7 +376,7 @@ void person::GetMyDateOfHIVInfection(){
             
             else {
                 cout << "Error!! We did not assign HIV " << endl;
-                cout << "Person ID " << PersonID << " DoB " << DoB << " date of death " << DateOfDeath << " Region " << Region << endl;
+                cout << "Person ID " << PersonID << " DoB " << DoB << " date of death " << DateOfDeath << endl;
             }
             
  //cout << "HIV is " << HIV << endl;

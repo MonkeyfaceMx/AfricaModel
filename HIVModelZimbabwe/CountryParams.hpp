@@ -13,7 +13,5 @@
 
 void loadCountryParams(int x);
 void getParamsString(int x);
-void loadRegionParams(int x);
-
 
 #endif 

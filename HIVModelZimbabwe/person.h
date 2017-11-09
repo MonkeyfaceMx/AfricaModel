@@ -25,7 +25,6 @@ public:
     //// --- Persons Characteristics --- ////
     int PersonID;									// -- Basic variables --
     int Sex;
-    double Region;
     
     double DoB;										// -- Variables related to age --
     double Age;
@@ -90,8 +89,6 @@ public:
     // --- Sex ---
     void GenderDistribution();						// Function to assign sex
     
-    // --- Region ---
-    void RegionDistribution();                        // Function to assign region
     
     // --- Year of Birth ---
     void GetMyDoB();								// Function to assign AGE and DOB (with months)
