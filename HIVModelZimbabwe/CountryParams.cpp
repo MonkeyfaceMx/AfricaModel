@@ -159,18 +159,18 @@ else if (x == 4){                                          // Uasin Gishu - KENY
 
 void getParamsString(int x){
     if (x == 1){
-        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Kenya/";
     }
 
     else if (x == 2){
-        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Zimbabwe/";
     }
     else if (x == 3){
-        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Malawi/";
     }
     
     else if (x == 4){
-        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Kenya_UG/";
     }
     
     
