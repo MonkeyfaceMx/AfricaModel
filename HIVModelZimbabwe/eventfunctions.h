@@ -20,8 +20,7 @@ using namespace std;
 	
 	//// --- Calendar Events ---
 	void EventTellNewYear(person *MyPointerToPerson);			// Tell us when a new year start an update calendar-related items
-    void EventAssignRegionAndHIV(person *MyPointerToPerson);    // When 1970 comes along we assign region and hence HIV date of infection
-	
+
 	
 	//// --- HIV Events ---
 	void EventMyHIVInfection(person *MyPointerToPerson);       // Function executed once person gets infecte with HIV

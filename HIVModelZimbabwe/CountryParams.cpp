@@ -127,14 +127,14 @@ else if (x == 3){                                          // MALAWI need to rep
     OtherCan_d   =3.1;
     }
     
-else if (x == 4){                                          // KENYA - ELDORET
-    cout << "You have selected Kenya - Eldoret" << endl;
-    UN_Pop=5909800;
+else if (x == 4){                                          // Uasin Gishu - KENYA
+    cout << "You have selected Kenya - Uasin Gishu" << endl;
+    UN_Pop=104393;
     init_pop=UN_Pop/factor;
     total_population=init_pop;
     ART_start_yr=2004;
     ageAdult=15;
-    Sex_ratio=0.495639296;
+    Sex_ratio=0.50237783022;
     ARTbuffer=1.01;
     MortAdj=1;
     // Mortality percentages from GBD 2016
@@ -159,18 +159,18 @@ else if (x == 4){                                          // KENYA - ELDORET
 
 void getParamsString(int x){
     if (x == 1){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
     }
-    
+
     else if (x == 2){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
     }
     else if (x == 3){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
     }
     
     else if (x == 4){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/";
     }
     
     

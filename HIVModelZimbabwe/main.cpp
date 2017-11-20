@@ -32,13 +32,13 @@ using namespace std;
 
 // STEP 1 --- SELECT THE COUNTRY TO RUN THE MODEL
 // 1=KENYA      2=ZIMBABWE      3=MALAWI      4=ELDORET
-int country=1;
+int country=4;
 
 // STEP 2 --- NAME THE DIRECTORY AND TAG FOR THE OUTPUT FILE
-string OutputFileDirectory="/Users/rcassidy/Dropbox/Latest.csv";
+string OutputFileDirectory="/Users/rachelcassidy/Dropbox/Latest.csv";
 
 /// STEP 3 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
-int factor=100;
+int factor=1; //county = 1, country = 100
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////                                   MODIFY IF NEEDED PARAMETERS                                        //////////

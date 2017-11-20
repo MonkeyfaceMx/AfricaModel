@@ -48,6 +48,8 @@
 		692999A21FA228AA005AA95A /* incidence_women_eastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_eastern.csv; sourceTree = "<group>"; };
 		692999A31FA228AB005AA95A /* incidence_men_northeastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_northeastern.csv; sourceTree = "<group>"; };
 		692999A41FA228AB005AA95A /* incidence_men_coast.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_coast.csv; sourceTree = "<group>"; };
+		6968BD4C1FC30E65004D54B2 /* HIV_incidence_men_UG.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HIV_incidence_men_UG.csv; sourceTree = "<group>"; };
+		6968BD4D1FC30E8D004D54B2 /* HIV_incidence_women_UG.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = HIV_incidence_women_UG.csv; sourceTree = "<group>"; };
 		73BD220A1C58F87C00BC7AC6 /* HIVModelZimbabwe */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HIVModelZimbabwe; sourceTree = BUILT_PRODUCTS_DIR; };
 		73BD22151C58F94800BC7AC6 /* CParamReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CParamReader.cpp; sourceTree = "<group>"; };
 		73BD22191C58F96100BC7AC6 /* CParamReader.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CParamReader.hpp; sourceTree = "<group>"; };
@@ -115,6 +117,8 @@
 				73BD221E1C58F96100BC7AC6 /* eventfunctions.h */,
 				73BD221F1C58F96100BC7AC6 /* eventQ.cpp */,
 				73BD22201C58F96100BC7AC6 /* eventQ.h */,
+				6968BD4C1FC30E65004D54B2 /* HIV_incidence_men_UG.csv */,
+				6968BD4D1FC30E8D004D54B2 /* HIV_incidence_women_UG.csv */,
 				73BD22221C58F96100BC7AC6 /* HIV_incidence_men.csv */,
 				73BD22231C58F96100BC7AC6 /* HIV_incidence_women.csv */,
 				6929999D1FA228AA005AA95A /* incidence_men_central.csv */,
