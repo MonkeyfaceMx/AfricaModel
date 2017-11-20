@@ -129,7 +129,7 @@ else if (x == 3){                                          // MALAWI need to rep
     
 else if (x == 4){                                          // Uasin Gishu - KENYA
     cout << "You have selected Kenya - Uasin Gishu" << endl;
-    UN_Pop=104393;
+    UN_Pop=99075;
     init_pop=UN_Pop/factor;
     total_population=init_pop;
     ART_start_yr=2004;

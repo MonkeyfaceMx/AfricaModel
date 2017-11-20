@@ -31,7 +31,7 @@ using namespace std;
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // STEP 1 --- SELECT THE COUNTRY TO RUN THE MODEL
-// 1=KENYA      2=ZIMBABWE      3=MALAWI      4=ELDORET
+// 1=KENYA      2=ZIMBABWE      3=MALAWI      4=KENYA - UG
 int country=4;
 
 // STEP 2 --- NAME THE DIRECTORY AND TAG FOR THE OUTPUT FILE
