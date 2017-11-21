@@ -38,7 +38,7 @@ int country=4;
 string OutputFileDirectory="/Users/rcassidy/Dropbox/Latest.csv";
 
 /// STEP 3 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
-int factor=5; //county = 1, country = 100
+int factor=1; //county = 1, country = 100
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////                                   MODIFY IF NEEDED PARAMETERS                                        //////////
