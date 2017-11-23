@@ -65,6 +65,7 @@ int         UN_Pop;                                                             
 int         init_pop;                                                                                           //////////
 int         total_population;                                                                                   //////////
 double      Sex_ratio;
+double      HPV_ratio;
 int         ageAdult;                                                                                           //////////
 double      ARTbuffer;                                                                                          //////////
 double      MortAdj;                                                                                            //////////
@@ -203,6 +204,7 @@ int main(){
         (MyArrayOfPointersToPeople[i])->GenderDistribution();				// --- Assign Sex- ---
         (MyArrayOfPointersToPeople[i])->GetMyDoB();							// --- Assign DoB/Age ---
         (MyArrayOfPointersToPeople[i])->GetDateOfDeath();					// --- Assign date of death ---
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection();            // --- Assign date of HPV infection ---
         if (MyArrayOfPointersToPeople[i]->Sex == 2 && MyArrayOfPointersToPeople[i]->Age<50 && MyArrayOfPointersToPeople[i]->AgeAtDeath>=15) {(MyArrayOfPointersToPeople[i])->GetDateOfBaby();}              // --- Assign Birth of all Children- ---
         (MyArrayOfPointersToPeople[i])->GetMyDateNCD();                     // --- Get date of NCDs ---
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
@@ -242,7 +244,7 @@ int main(){
     
     
     for (int i=0; i<total_population; i++) {								// Note: If adding more variables to be output, need to adapt the %x
-        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d \n",
+        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f \n",
                 MyArrayOfPointersToPeople[i]->PersonID,
                 MyArrayOfPointersToPeople[i]->Sex,
                 MyArrayOfPointersToPeople[i]->DoB,
@@ -276,8 +278,8 @@ int main(){
                 MyArrayOfPointersToPeople[i]->Oeso,
                 MyArrayOfPointersToPeople[i]->Prostate,
                 MyArrayOfPointersToPeople[i]->OtherCan,
-                MyArrayOfPointersToPeople[i]->Stroke_status             // Check if used and, if not, remove
-                
+                MyArrayOfPointersToPeople[i]->Stroke_status,             // Check if used and, if not, remove
+                MyArrayOfPointersToPeople[i]->HPV
                 );}
     fclose(ProjectZim);
     
@@ -309,6 +311,7 @@ int main(){
     double Oeso_m       =(count_causeofdeath[10]/(double)count_2016deaths)*100;
     double Prostate_m    =(count_causeofdeath[11]/(double)count_2016deaths)*100;
     double OtherCan_m   =(count_causeofdeath[12]/(double)count_2016deaths)*100;
+    double HPV_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     
     
     // Output the model percentages
@@ -325,6 +328,7 @@ int main(){
     cout << "Oeso "       << Oeso_m << endl;
     cout << "Prostate "    << Prostate_m << endl;
     cout << "OtherCan "   << OtherCan_m << endl;
+    cout << "HPV "        << HPV_m << endl;
 
     
     // Least square calculation
@@ -340,8 +344,7 @@ int main(){
     pow ((Liver_m       - Liver_d),2) +
     pow ((Oeso_m        - Oeso_d),2) +
     pow ((Prostate_m     - Prostate_d),2) +
-    pow ((OtherCan_m    - OtherCan_d),2);
-    
+    pow ((OtherCan_m    - OtherCan_d),2) ;
     
     
     cout << "Least Square " << sum_MinLik << endl;

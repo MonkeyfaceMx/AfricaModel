@@ -24,6 +24,7 @@ using namespace std;
 	
 	//// --- HIV Events ---
 	void EventMyHIVInfection(person *MyPointerToPerson);       // Function executed once person gets infecte with HIV
+    void EventMyHPVInfection(person *MyPointerToPerson);       // Function executed once person gets infected with HPV
 	void EventCD4change(person *MyPointerToPerson);			   // Function executed when CD4 count is due to change (go down)
     void EventARTCatSwitch(person *MyPointerToPerson);         // Function to switch people from Kids ART cat to Adult ART cat
 

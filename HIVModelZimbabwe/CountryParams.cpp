@@ -26,6 +26,7 @@ extern int ART_start_yr;
 extern int factor;
 extern int ageAdult;
 extern double Sex_ratio;
+extern double HPV_ratio;
 
 extern double ARTbuffer;
 extern double MortAdj;
@@ -135,6 +136,7 @@ else if (x == 4){                                          // Uasin Gishu - KENY
     ART_start_yr=2004;
     ageAdult=15;
     Sex_ratio=0.50237783022;
+    HPV_ratio=0.388;
     ARTbuffer=1.01;
     MortAdj=1;
     // Mortality percentages from GBD 2016

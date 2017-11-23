@@ -34,7 +34,6 @@ extern int *p_PY;
 extern vector<event*> Events;
 extern int ART_start_yr;
 extern int country;
-extern int region;
 
 extern double*** CD4_startarray;
 extern double**  CD4_prog_rates;
@@ -371,6 +370,7 @@ void EventBirth(person *MyPointerToPerson){
         (MyArrayOfPointersToPeople[total_population-1])->GetDateOfBaby();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateNCD();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateCancers();
+        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHIVInfection();
     
         
@@ -384,6 +384,25 @@ void EventBirth(person *MyPointerToPerson){
     }
 }
 
+
+//// --- HPV EVENT --- ////
+
+void EventMyHPVInfection(person *MyPointerToPerson){
+    
+    E(cout << "Somebody is about to get infected with HPV: " << endl;)            // Error message - can be switched on/off
+    
+    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV: " << MyPointerToPerson->HPV<< endl;
+        }
+        
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+    }
+    
+    E(cout << "Somebody has just been infected with HPV!" << endl;)                // Error message - can be switched on/off
+}
 
 //// --- HIV EVENT --- ////
 void EventMyHIVInfection(person *MyPointerToPerson){
