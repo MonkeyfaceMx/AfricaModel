@@ -35,7 +35,7 @@ using namespace std;
 int country=4;
 
 // STEP 2 --- NAME THE DIRECTORY AND TAG FOR THE OUTPUT FILE
-string OutputFileDirectory="/Users/rcassidy/Dropbox/Latest.csv";
+string OutputFileDirectory="/Users/rachelcassidy/Dropbox/Latest.csv";
 
 /// STEP 3 --- AT WHAT FACTOR SHOULD WE RUN THE POPULATION?
 int factor=1; //county = 1, country = 100
@@ -65,7 +65,8 @@ int         UN_Pop;                                                             
 int         init_pop;                                                                                           //////////
 int         total_population;                                                                                   //////////
 double      Sex_ratio;
-double      HPV_ratio;
+double      HPV_1_ratio;
+double      HPV_2_ratio;
 int         ageAdult;                                                                                           //////////
 double      ARTbuffer;                                                                                          //////////
 double      MortAdj;                                                                                            //////////
@@ -204,7 +205,8 @@ int main(){
         (MyArrayOfPointersToPeople[i])->GenderDistribution();				// --- Assign Sex- ---
         (MyArrayOfPointersToPeople[i])->GetMyDoB();							// --- Assign DoB/Age ---
         (MyArrayOfPointersToPeople[i])->GetDateOfDeath();					// --- Assign date of death ---
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection();            // --- Assign date of HPV infection ---
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage1();            // --- Assign date of HPV infection ---
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage2();            // --- Recover or progress from HPV infection ---
         if (MyArrayOfPointersToPeople[i]->Sex == 2 && MyArrayOfPointersToPeople[i]->Age<50 && MyArrayOfPointersToPeople[i]->AgeAtDeath>=15) {(MyArrayOfPointersToPeople[i])->GetDateOfBaby();}              // --- Assign Birth of all Children- ---
         (MyArrayOfPointersToPeople[i])->GetMyDateNCD();                     // --- Get date of NCDs ---
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
@@ -244,7 +246,7 @@ int main(){
     
     
     for (int i=0; i<total_population; i++) {								// Note: If adding more variables to be output, need to adapt the %x
-        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f \n",
+        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f \n",
                 MyArrayOfPointersToPeople[i]->PersonID,
                 MyArrayOfPointersToPeople[i]->Sex,
                 MyArrayOfPointersToPeople[i]->DoB,
@@ -279,7 +281,8 @@ int main(){
                 MyArrayOfPointersToPeople[i]->Prostate,
                 MyArrayOfPointersToPeople[i]->OtherCan,
                 MyArrayOfPointersToPeople[i]->Stroke_status,             // Check if used and, if not, remove
-                MyArrayOfPointersToPeople[i]->HPV
+                MyArrayOfPointersToPeople[i]->HPV,
+                MyArrayOfPointersToPeople[i]->HPV_Stage2
                 );}
     fclose(ProjectZim);
     
@@ -312,6 +315,7 @@ int main(){
     double Prostate_m    =(count_causeofdeath[11]/(double)count_2016deaths)*100;
     double OtherCan_m   =(count_causeofdeath[12]/(double)count_2016deaths)*100;
     double HPV_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_Stage2_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     
     
     // Output the model percentages
@@ -329,6 +333,7 @@ int main(){
     cout << "Prostate "    << Prostate_m << endl;
     cout << "OtherCan "   << OtherCan_m << endl;
     cout << "HPV "        << HPV_m << endl;
+    cout << "HPV_Stage2 "        << HPV_Stage2_m << endl;
 
     
     // Least square calculation

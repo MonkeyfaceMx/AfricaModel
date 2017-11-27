@@ -26,7 +26,8 @@ extern int ART_start_yr;
 extern int factor;
 extern int ageAdult;
 extern double Sex_ratio;
-extern double HPV_ratio;
+extern double HPV_1_ratio;
+extern double HPV_2_ratio;
 
 extern double ARTbuffer;
 extern double MortAdj;
@@ -136,7 +137,8 @@ else if (x == 4){                                          // Uasin Gishu - KENY
     ART_start_yr=2004;
     ageAdult=15;
     Sex_ratio=0.50237783022;
-    HPV_ratio=0.388;
+    HPV_1_ratio=0.388;
+    HPV_2_ratio=0.2;
     ARTbuffer=1.01;
     MortAdj=1;
     // Mortality percentages from GBD 2016
@@ -161,18 +163,18 @@ else if (x == 4){                                          // Uasin Gishu - KENY
 
 void getParamsString(int x){
     if (x == 1){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Kenya/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Kenya/";
     }
 
     else if (x == 2){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Zimbabwe/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Zimbabwe/";
     }
     else if (x == 3){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Malawi/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Malawi/";
     }
     
     else if (x == 4){
-        ParamDirectory="/Users/rcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Kenya_UG/";
+        ParamDirectory="/Users/rachelcassidy/Dropbox/Ageing in Kenya and Zimbabwe - project/New_Model_Africa/HIVModelZimbabwe/Kenya_UG/";
     }
     
     

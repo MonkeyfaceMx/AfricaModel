@@ -41,6 +41,7 @@ public:
     
     double HIV;                                     // -- Variables related to HIV --
     double HPV;
+    double HPV_Stage2;
     int CD4_cat_start;
     int CD4_cat_ARTstart;
     int CD4_cat;
@@ -107,8 +108,10 @@ public:
     void GetMyDoBNewEntry();						// Function to assign age 0 to babies
     
     // --- Date of HPV Infection ---
-    void GetMyDateOfHPVInfection();
-    
+    void GetMyDateOfHPVInfection_Stage1();
+
+    // --- HPV - Progress or Recover/Immune ---
+    void GetMyDateOfHPVInfection_Stage2();
     
     // --- Date of Infection ---
     void GetMyDateOfHIVInfection();
