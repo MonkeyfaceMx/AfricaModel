@@ -67,6 +67,9 @@ int         total_population;                                                   
 double      Sex_ratio;
 double      HPV_1_ratio;
 double      HPV_2_ratio;
+double      HPV_3_ratio;
+double      HPV_4_ratio;
+double      HPV_5_ratio;
 int         ageAdult;                                                                                           //////////
 double      ARTbuffer;                                                                                          //////////
 double      MortAdj;                                                                                            //////////
@@ -207,6 +210,9 @@ int main(){
         (MyArrayOfPointersToPeople[i])->GetDateOfDeath();					// --- Assign date of death ---
         (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage1();            // --- Assign date of HPV infection ---
         (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage2();            // --- Recover or progress from HPV infection ---
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage3();            // --- Recover or progress from HPV infection ---\
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage4();            // --- Recover or progress from HPV infection ---
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage5();            // --- Recover or progress from HPV infection ---
         if (MyArrayOfPointersToPeople[i]->Sex == 2 && MyArrayOfPointersToPeople[i]->Age<50 && MyArrayOfPointersToPeople[i]->AgeAtDeath>=15) {(MyArrayOfPointersToPeople[i])->GetDateOfBaby();}              // --- Assign Birth of all Children- ---
         (MyArrayOfPointersToPeople[i])->GetMyDateNCD();                     // --- Get date of NCDs ---
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
@@ -246,7 +252,7 @@ int main(){
     
     
     for (int i=0; i<total_population; i++) {								// Note: If adding more variables to be output, need to adapt the %x
-        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f \n",
+        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f \n",
                 MyArrayOfPointersToPeople[i]->PersonID,
                 MyArrayOfPointersToPeople[i]->Sex,
                 MyArrayOfPointersToPeople[i]->DoB,
@@ -281,8 +287,13 @@ int main(){
                 MyArrayOfPointersToPeople[i]->Prostate,
                 MyArrayOfPointersToPeople[i]->OtherCan,
                 MyArrayOfPointersToPeople[i]->Stroke_status,             // Check if used and, if not, remove
+                MyArrayOfPointersToPeople[i]->HPV_Status,
+                MyArrayOfPointersToPeople[i]->HPV_Recovery_Status,
                 MyArrayOfPointersToPeople[i]->HPV,
-                MyArrayOfPointersToPeople[i]->HPV_Stage2
+                MyArrayOfPointersToPeople[i]->HPV_Stage2,
+                MyArrayOfPointersToPeople[i]->HPV_Stage3,
+                MyArrayOfPointersToPeople[i]->HPV_Stage4,
+                MyArrayOfPointersToPeople[i]->HPV_Stage5
                 );}
     fclose(ProjectZim);
     
@@ -314,9 +325,13 @@ int main(){
     double Oeso_m       =(count_causeofdeath[10]/(double)count_2016deaths)*100;
     double Prostate_m    =(count_causeofdeath[11]/(double)count_2016deaths)*100;
     double OtherCan_m   =(count_causeofdeath[12]/(double)count_2016deaths)*100;
+    double HPV_Status_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_Recovery_Status_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     double HPV_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     double HPV_Stage2_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    
+    double HPV_Stage3_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_Stage4_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_Stage5_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     
     // Output the model percentages
     cout << "Background " << background_m << endl;
@@ -332,8 +347,13 @@ int main(){
     cout << "Oeso "       << Oeso_m << endl;
     cout << "Prostate "    << Prostate_m << endl;
     cout << "OtherCan "   << OtherCan_m << endl;
+    cout << "HPV_Status_m "        << HPV_Status_m << endl;
+    cout << "HPV_Recovery_Status "        << HPV_Recovery_Status_m << endl;
     cout << "HPV "        << HPV_m << endl;
     cout << "HPV_Stage2 "        << HPV_Stage2_m << endl;
+    cout << "HPV_Stage3 "        << HPV_Stage3_m << endl;
+    cout << "HPV_Stage4 "        << HPV_Stage4_m << endl;
+    cout << "HPV_Stage5 "        << HPV_Stage5_m << endl;
 
     
     // Least square calculation

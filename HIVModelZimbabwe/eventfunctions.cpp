@@ -372,6 +372,9 @@ void EventBirth(person *MyPointerToPerson){
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateCancers();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage1();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage2();
+        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage3();
+        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage4();
+        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage5();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHIVInfection();
     
         
@@ -415,6 +418,63 @@ void EventMyHPVInfection_Stage2(person *MyPointerToPerson){
         
         if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage2){
             cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage2: " << MyPointerToPerson->HPV_Stage2<< endl;
+        }
+        
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+    }
+    
+    E(cout << "Somebody has just been recovered/progressed from HPV!" << endl;)                // Error message - can be switched on/off
+}
+
+//// --- HPV EVENT --- Stage 3 ////
+
+void EventMyHPVInfection_Stage3(person *MyPointerToPerson){
+    
+    E(cout << "Somebody is about to get recover or progress from HPV: " << endl;)            // Error message - can be switched on/off
+    
+    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage3){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage3: " << MyPointerToPerson->HPV_Stage3<< endl;
+        }
+        
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+    }
+    
+    E(cout << "Somebody has just been recovered/progressed from HPV!" << endl;)                // Error message - can be switched on/off
+}
+
+//// --- HPV EVENT --- Stage 4 ////
+
+void EventMyHPVInfection_Stage4(person *MyPointerToPerson){
+    
+    E(cout << "Somebody is about to get recover or progress from HPV: " << endl;)            // Error message - can be switched on/off
+    
+    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage4){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage4: " << MyPointerToPerson->HPV_Stage4<< endl;
+        }
+        
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+    }
+    
+    E(cout << "Somebody has just been recovered/progressed from HPV!" << endl;)                // Error message - can be switched on/off
+}
+
+//// --- HPV EVENT --- Stage 5 ////
+
+void EventMyHPVInfection_Stage5(person *MyPointerToPerson){
+    
+    E(cout << "Somebody is about to get recover or progress from HPV: " << endl;)            // Error message - can be switched on/off
+    
+    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage5){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage5: " << MyPointerToPerson->HPV_Stage5<< endl;
         }
         
         MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below

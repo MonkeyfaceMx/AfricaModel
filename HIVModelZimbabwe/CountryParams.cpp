@@ -28,6 +28,9 @@ extern int ageAdult;
 extern double Sex_ratio;
 extern double HPV_1_ratio;
 extern double HPV_2_ratio;
+extern double HPV_3_ratio;
+extern double HPV_4_ratio;
+extern double HPV_5_ratio;
 
 extern double ARTbuffer;
 extern double MortAdj;
@@ -139,6 +142,9 @@ else if (x == 4){                                          // Uasin Gishu - KENY
     Sex_ratio=0.50237783022;
     HPV_1_ratio=0.388;
     HPV_2_ratio=0.2;
+    HPV_3_ratio=0.4;
+    HPV_4_ratio=0.65;
+    HPV_5_ratio=1.0;
     ARTbuffer=1.01;
     MortAdj=1;
     // Mortality percentages from GBD 2016

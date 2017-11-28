@@ -39,9 +39,14 @@ public:
     int Alive;
     int AgeAtDeath;
     
-    double HIV;                                     // -- Variables related to HIV --
+    double HIV; // -- Variables related to HIV --
+    double HPV_Status;
+    double HPV_Recovery_Status;
     double HPV;
     double HPV_Stage2;
+    double HPV_Stage3;
+    double HPV_Stage4;
+    double HPV_Stage5;
     int CD4_cat_start;
     int CD4_cat_ARTstart;
     int CD4_cat;
@@ -112,6 +117,15 @@ public:
 
     // --- HPV - Progress or Recover/Immune ---
     void GetMyDateOfHPVInfection_Stage2();
+
+    // --- HPV - Progress or Recover/Immune ---
+    void GetMyDateOfHPVInfection_Stage3();
+    
+    // --- HPV - Progress or Recover/Immune ---
+    void GetMyDateOfHPVInfection_Stage4();
+    
+    // --- HPV - Progress or Recover/Immune ---
+    void GetMyDateOfHPVInfection_Stage5();
     
     // --- Date of Infection ---
     void GetMyDateOfHIVInfection();
