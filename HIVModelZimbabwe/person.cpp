@@ -99,10 +99,10 @@ person::person()											// First 'person' class second constructor/variable a
     HPV_Stage3=-999;
     HPV_Stage4=-999;
     HPV_Stage5=-999;
+    HPV_Stage1_Recovery=-999;
     HPV_Stage2_Recovery=-999;
     HPV_Stage3_Recovery=-999;
     HPV_Stage4_Recovery=-999;
-    HPV_Stage5_Recovery=-999;
     CD4_cat_start=-999;                                     // CD4 at HIV infection
     CD4_cat_ARTstart=-999;
     CD4_cat=-999;											// Where 0=>500, 1=350-500, 2=250-350, 3=200-250, 4=100-200, 5=50-100, and 6=<50
@@ -358,12 +358,14 @@ void person::GetMyDateOfHPVInfection_Stage1(){
     
     if(DoB>=1900 && Alive==1 && Sex==2){                                            // Only people born from 1900 can ever experience HIV in their life
         
+       // REMOVEW THIS
         int year = floor(*p_GT);
         double months = floor(((1-(*p_GT-year+0.01))*12));
         double fractionyear = 1-(*p_GT-year);
         // cout << "HPV" << HPV << endl;
         // Let's see when people are getting infected with HPV
         if(HPV==-999){
+            // J NEEdS TO BE UPDATED PICK FORM A UNIFORM DISTRUBTION 15-65 - later want more young 15-25
             int j=0;                                                // This will be matched to probability taken from random number generator
             float TestHPVDate=0;
             double YearFraction=-999;
@@ -375,6 +377,8 @@ void person::GetMyDateOfHPVInfection_Stage1(){
                 if (h<=HPV_1_ratio){                        // In case they DO get HPV in their life
                     TestHPVDate=(DoB+j)+YearFraction;
               //      cout << "TestHPVDate" << TestHPVDate << endl;
+                    
+                    // NEVER HARD CODE - make centrally avaible
                     if (TestHPVDate<DateOfDeath && TestHPVDate>=1956){HPV=TestHPVDate;}{HPV_Status_1=1;}
                     if (TestHPVDate>=DateOfDeath && TestHPVDate>=1956) {HPV=-977;}
                     if (TestHPVDate<1956) {HPV=-989;}
@@ -430,14 +434,14 @@ void person::GetMyDateOfHPVInfection_Stage2(){
         if(HPV>-1){
             int j=0;                                                // This will be matched to probability taken from random number generator
             float TestHPV_Stage2_Date=0;
-            float TestHPV_Stage2_Date_Recovery=0;
+            float TestHPV_Stage1_Date_Recovery=0;
             double YearFraction=-999;
             if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
             if(months<1){YearFraction=0;}
             double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
             // cout << "h:" << h << endl;
             
-            if (h>HPV_2_ratio){TestHPV_Stage2_Date_Recovery=(HPV+j)+YearFraction;}{HPV_Stage2_Recovery=TestHPV_Stage2_Date_Recovery;}{HPV_Stage2=-988;}{HPV_Recovery_Status=1;}      // In case they recover from HPV and are now immune
+            if (h>HPV_2_ratio){TestHPV_Stage1_Date_Recovery=(HPV+j)+YearFraction;}{HPV_Stage1_Recovery=TestHPV_Stage1_Date_Recovery;}{HPV_Stage2=-988;}{HPV_Recovery_Status=1;}      // In case they recover from HPV and are now immune
             if (h<=HPV_2_ratio){                        // In case they progress from HPV to CIN1
                 TestHPV_Stage2_Date=(HPV+j)+YearFraction;
                 //      cout << "TestHPVDate" << TestHPVDate << endl;
@@ -469,14 +473,14 @@ void person::GetMyDateOfHPVInfection_Stage2(){
             p_PQ->push(HPV_Stage2Event);
         }
     
-        if (HPV_Stage2_Recovery>=*p_GT && HPV_Stage2_Recovery<EndYear){
+        if (HPV_Stage1_Recovery>=*p_GT && HPV_Stage1_Recovery<EndYear){
             int p=PersonID-1;
-            event * HPV_Stage2_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage2_RecoveryEvent);
-            HPV_Stage2_RecoveryEvent->time = HPV_Stage2_Recovery;
-            HPV_Stage2_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage2;
-            HPV_Stage2_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage2_RecoveryEvent);
+            event * HPV_Stage1_RecoveryEvent = new event;
+            Events.push_back(HPV_Stage1_RecoveryEvent);
+            HPV_Stage1_RecoveryEvent->time = HPV_Stage1_Recovery;
+            HPV_Stage1_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage2;
+            HPV_Stage1_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
+            p_PQ->push(HPV_Stage1_RecoveryEvent);
         }
     }
     
@@ -507,13 +511,13 @@ void person::GetMyDateOfHPVInfection_Stage3(){
         if(HPV_Stage2>-1){
             int j=0;                                                // This will be matched to probability taken from random number generator
             float TestHPV_Stage3_Date=0;
-            float TestHPV_Stage3_Date_Recovery=0;
+            float TestHPV_Stage2_Date_Recovery=0;
             double YearFraction=-999;
             if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
             if(months<1){YearFraction=0;}
             double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
             // cout << "h:" << h << endl;
-            if (h>HPV_3_ratio){TestHPV_Stage3_Date_Recovery=(HPV_Stage2+j)+YearFraction;}{HPV_Stage3_Recovery=TestHPV_Stage3_Date_Recovery;}{HPV_Stage3=-988;}{HPV_Recovery_Status=2;}              // In case they recover from HPV and are now immune
+            if (h>HPV_3_ratio){TestHPV_Stage2_Date_Recovery=(HPV_Stage2+j)+YearFraction;}{HPV_Stage2_Recovery=TestHPV_Stage2_Date_Recovery;}{HPV_Stage3=-988;}{HPV_Recovery_Status=2;}              // In case they recover from HPV and are now immune
             if (h<=HPV_3_ratio){                        // In case they progress from HPV to CIN1
                 TestHPV_Stage3_Date=(HPV_Stage2+j)+YearFraction;
                 //      cout << "TestHPVDate" << TestHPVDate << endl;
@@ -544,14 +548,14 @@ void person::GetMyDateOfHPVInfection_Stage3(){
             HPV_Stage3Event->person_ID = MyArrayOfPointersToPeople[p];
             p_PQ->push(HPV_Stage3Event);
         }
-        if (HPV_Stage3_Recovery>=*p_GT && HPV_Stage3_Recovery<EndYear){
+        if (HPV_Stage2_Recovery>=*p_GT && HPV_Stage2_Recovery<EndYear){
             int p=PersonID-1;
-            event * HPV_Stage3_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage3_RecoveryEvent);
-            HPV_Stage3_RecoveryEvent->time = HPV_Stage3_Recovery;
-            HPV_Stage3_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage3;
-            HPV_Stage3_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage3_RecoveryEvent);
+            event * HPV_Stage2_RecoveryEvent = new event;
+            Events.push_back(HPV_Stage2_RecoveryEvent);
+            HPV_Stage2_RecoveryEvent->time = HPV_Stage2_Recovery;
+            HPV_Stage2_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage3;
+            HPV_Stage2_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
+            p_PQ->push(HPV_Stage2_RecoveryEvent);
         }
     }
     
@@ -582,13 +586,13 @@ void person::GetMyDateOfHPVInfection_Stage4(){
         if(HPV_Stage3>-1){
             int j=0;                                                // This will be matched to probability taken from random number generator
             float TestHPV_Stage4_Date=0;
-            float TestHPV_Stage4_Date_Recovery=0;
+            float TestHPV_Stage3_Date_Recovery=0;
             double YearFraction=-999;
             if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
             if(months<1){YearFraction=0;}
             double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
             // cout << "h:" << h << endl;
-            if (h>HPV_4_ratio){TestHPV_Stage4_Date_Recovery=(HPV_Stage3+j)+YearFraction;}{HPV_Stage4_Recovery=TestHPV_Stage4_Date_Recovery;}{HPV_Stage4=-988;}{HPV_Recovery_Status=3;}              // In case they recover from HPV and are now immune
+            if (h>HPV_4_ratio){TestHPV_Stage3_Date_Recovery=(HPV_Stage3+j)+YearFraction;}{HPV_Stage3_Recovery=TestHPV_Stage3_Date_Recovery;}{HPV_Stage4=-988;}{HPV_Recovery_Status=3;}              // In case they recover from HPV and are now immune
             if (h<=HPV_4_ratio){                        // In case they progress from HPV to CIN1
                 TestHPV_Stage4_Date=(HPV_Stage3+j)+YearFraction;
                 //      cout << "TestHPVDate" << TestHPVDate << endl;
@@ -619,14 +623,14 @@ void person::GetMyDateOfHPVInfection_Stage4(){
             HPV_Stage4Event->person_ID = MyArrayOfPointersToPeople[p];
             p_PQ->push(HPV_Stage4Event);
         }
-        if (HPV_Stage4_Recovery>=*p_GT && HPV_Stage4_Recovery<EndYear){
+        if (HPV_Stage3_Recovery>=*p_GT && HPV_Stage3_Recovery<EndYear){
             int p=PersonID-1;
-            event * HPV_Stage4_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage4_RecoveryEvent);
-            HPV_Stage4_RecoveryEvent->time = HPV_Stage4_Recovery;
-            HPV_Stage4_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage4;
-            HPV_Stage4_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage4_RecoveryEvent);
+            event * HPV_Stage3_RecoveryEvent = new event;
+            Events.push_back(HPV_Stage3_RecoveryEvent);
+            HPV_Stage3_RecoveryEvent->time = HPV_Stage3_Recovery;
+            HPV_Stage3_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage4;
+            HPV_Stage3_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
+            p_PQ->push(HPV_Stage3_RecoveryEvent);
         }
     }
     
@@ -658,13 +662,13 @@ void person::GetMyDateOfHPVInfection_Stage5(){
         if(HPV_Stage4>-1){
             int j=0;                                                // This will be matched to probability taken from random number generator
             float TestHPV_Stage5_Date=0;
-            float TestHPV_Stage5_Date_Recovery=0;
+            float TestHPV_Stage4_Date_Recovery=0;
             double YearFraction=-999;
             if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
             if(months<1){YearFraction=0;}
             double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
             // cout << "h:" << h << endl;
-            if (h>HPV_5_ratio){TestHPV_Stage5_Date_Recovery=(HPV_Stage4+j)+YearFraction;}{HPV_Stage5_Recovery=TestHPV_Stage5_Date_Recovery;}{HPV_Stage5=-988;}{HPV_Recovery_Status=4;}              // In case they recover from HPV and are now immune
+            if (h>HPV_5_ratio){TestHPV_Stage4_Date_Recovery=(HPV_Stage4+j)+YearFraction;}{HPV_Stage4_Recovery=TestHPV_Stage4_Date_Recovery;}{HPV_Stage5=-988;}{HPV_Recovery_Status=4;}              // In case they recover from HPV and are now immune
             if (h<=HPV_5_ratio){                        // In case they progress from HPV to CIN1
                 TestHPV_Stage5_Date=(HPV_Stage4+j)+YearFraction;
                 //      cout << "TestHPVDate" << TestHPVDate << endl;
@@ -695,14 +699,14 @@ void person::GetMyDateOfHPVInfection_Stage5(){
             HPV_Stage5Event->person_ID = MyArrayOfPointersToPeople[p];
             p_PQ->push(HPV_Stage5Event);
         }
-        if (HPV_Stage5_Recovery>=*p_GT && HPV_Stage5_Recovery<EndYear){
+        if (HPV_Stage4_Recovery>=*p_GT && HPV_Stage4_Recovery<EndYear){
             int p=PersonID-1;
-            event * HPV_Stage5_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage5_RecoveryEvent);
-            HPV_Stage5_RecoveryEvent->time = HPV_Stage5_Recovery;
-            HPV_Stage5_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage5;
-            HPV_Stage5_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage5_RecoveryEvent);
+            event * HPV_Stage4_RecoveryEvent = new event;
+            Events.push_back(HPV_Stage4_RecoveryEvent);
+            HPV_Stage4_RecoveryEvent->time = HPV_Stage4_Recovery;
+            HPV_Stage4_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage5;
+            HPV_Stage4_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
+            p_PQ->push(HPV_Stage4_RecoveryEvent);
         }
     }
     

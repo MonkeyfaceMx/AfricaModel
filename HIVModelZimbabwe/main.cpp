@@ -298,10 +298,10 @@ int main(){
                 MyArrayOfPointersToPeople[i]->HPV_Stage3,
                 MyArrayOfPointersToPeople[i]->HPV_Stage4,
                 MyArrayOfPointersToPeople[i]->HPV_Stage5,
+                MyArrayOfPointersToPeople[i]->HPV_Stage1_Recovery,
                 MyArrayOfPointersToPeople[i]->HPV_Stage2_Recovery,
                 MyArrayOfPointersToPeople[i]->HPV_Stage3_Recovery,
-                MyArrayOfPointersToPeople[i]->HPV_Stage4_Recovery,
-                MyArrayOfPointersToPeople[i]->HPV_Stage5_Recovery
+                MyArrayOfPointersToPeople[i]->HPV_Stage4_Recovery
                 );}
     fclose(ProjectZim);
     
@@ -344,10 +344,10 @@ int main(){
     double HPV_Stage3_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     double HPV_Stage4_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     double HPV_Stage5_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_Stage1_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     double HPV_Stage2_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     double HPV_Stage3_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     double HPV_Stage4_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage5_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     
     // Output the model percentages
     cout << "Background " << background_m << endl;
@@ -374,10 +374,10 @@ int main(){
     cout << "HPV_Stage3 "        << HPV_Stage3_m << endl;
     cout << "HPV_Stage4 "        << HPV_Stage4_m << endl;
     cout << "HPV_Stage5 "        << HPV_Stage5_m << endl;
+    cout << "HPV_Stage1_Recovery "        << HPV_Stage1_Recovery_m << endl;
     cout << "HPV_Stage2_Recovery "        << HPV_Stage2_Recovery_m << endl;
     cout << "HPV_Stage3_Recovery "        << HPV_Stage3_Recovery_m << endl;
     cout << "HPV_Stage4_Recovery "        << HPV_Stage4_Recovery_m << endl;
-    cout << "HPV_Stage5_Recovery "        << HPV_Stage5_Recovery_m << endl;
 
     
     // Least square calculation

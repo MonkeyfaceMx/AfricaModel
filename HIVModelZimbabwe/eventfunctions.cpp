@@ -394,8 +394,8 @@ void EventBirth(person *MyPointerToPerson){
 void EventMyHPVInfection(person *MyPointerToPerson){
     
     E(cout << "Somebody is about to get infected with HPV: " << endl;)            // Error message - can be switched on/off
-    
-    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
+    // AND NOT ON TREATMENT // IN THE RIGHT STAGE
+    if(MyPointerToPerson->Alive == 1 ) {                                            // Only execute this is patient is still alove
         
         if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV){
             cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV: " << MyPointerToPerson->HPV<< endl;
@@ -405,8 +405,16 @@ void EventMyHPVInfection(person *MyPointerToPerson){
         
     }
     
+    // Deciside this person recovers next or moves ot CN1
+    // Schedule event and push into vent queue
+    
+    
+    
     E(cout << "Somebody has just been infected with HPV!" << endl;)                // Error message - can be switched on/off
 }
+
+
+// Recovery FUnction
 
 //// --- HPV EVENT --- Stage 2 ////
 
@@ -420,8 +428,8 @@ void EventMyHPVInfection_Stage2(person *MyPointerToPerson){
             cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage2: " << MyPointerToPerson->HPV_Stage2<< endl;
         }
         
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage2_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage2_Recovery: " << MyPointerToPerson->HPV_Stage2_Recovery<< endl;
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage1_Recovery){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage1_Recovery: " << MyPointerToPerson->HPV_Stage1_Recovery<< endl;
         }
         
         MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
@@ -443,8 +451,8 @@ void EventMyHPVInfection_Stage3(person *MyPointerToPerson){
             cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage3: " << MyPointerToPerson->HPV_Stage3<< endl;
         }
         
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage3_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage3_Recovery: " << MyPointerToPerson->HPV_Stage3_Recovery<< endl;
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage2_Recovery){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage2_Recovery: " << MyPointerToPerson->HPV_Stage2_Recovery<< endl;
         }
         
         MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
@@ -466,8 +474,8 @@ void EventMyHPVInfection_Stage4(person *MyPointerToPerson){
             cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage4: " << MyPointerToPerson->HPV_Stage4<< endl;
         }
         
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage4_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage4_Recovery: " << MyPointerToPerson->HPV_Stage4_Recovery<< endl;
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage3_Recovery){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage3_Recovery: " << MyPointerToPerson->HPV_Stage3_Recovery<< endl;
         }
         
         MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
@@ -489,8 +497,8 @@ void EventMyHPVInfection_Stage5(person *MyPointerToPerson){
             cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage5: " << MyPointerToPerson->HPV_Stage5<< endl;
         }
         
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage5_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage5_Recovery: " << MyPointerToPerson->HPV_Stage5_Recovery<< endl;
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage4_Recovery){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage4_Recovery: " << MyPointerToPerson->HPV_Stage4_Recovery<< endl;
         }
         
         MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below

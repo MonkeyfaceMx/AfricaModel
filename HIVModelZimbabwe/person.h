@@ -51,10 +51,10 @@ public:
     double HPV_Stage3;
     double HPV_Stage4;
     double HPV_Stage5;
+    double HPV_Stage1_Recovery;
     double HPV_Stage2_Recovery;
     double HPV_Stage3_Recovery;
     double HPV_Stage4_Recovery;
-    double HPV_Stage5_Recovery;
     int CD4_cat_start;
     int CD4_cat_ARTstart;
     int CD4_cat;
