@@ -40,13 +40,21 @@ public:
     int AgeAtDeath;
     
     double HIV; // -- Variables related to HIV --
-    double HPV_Status;
+    double HPV_Status_1;
+    double HPV_Status_2;
+    double HPV_Status_3;
+    double HPV_Status_4;
+    double HPV_Status_5;
     double HPV_Recovery_Status;
     double HPV;
     double HPV_Stage2;
     double HPV_Stage3;
     double HPV_Stage4;
     double HPV_Stage5;
+    double HPV_Stage2_Recovery;
+    double HPV_Stage3_Recovery;
+    double HPV_Stage4_Recovery;
+    double HPV_Stage5_Recovery;
     int CD4_cat_start;
     int CD4_cat_ARTstart;
     int CD4_cat;
