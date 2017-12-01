@@ -65,11 +65,11 @@ int         UN_Pop;                                                             
 int         init_pop;                                                                                           //////////
 int         total_population;                                                                                   //////////
 double      Sex_ratio;
-double      HPV_1_ratio;
-double      HPV_2_ratio;
-double      HPV_3_ratio;
-double      HPV_4_ratio;
-double      HPV_5_ratio;
+double      HPV_Prevalence;
+double      CIN1_Prevalence;
+double      CIN2_3_Prevalence;
+double      CIS_Prevalence;
+double      ICC_Prevalence;
 int         ageAdult;                                                                                           //////////
 double      ARTbuffer;                                                                                          //////////
 double      MortAdj;                                                                                            //////////
@@ -208,11 +208,7 @@ int main(){
         (MyArrayOfPointersToPeople[i])->GenderDistribution();				// --- Assign Sex- ---
         (MyArrayOfPointersToPeople[i])->GetMyDoB();							// --- Assign DoB/Age ---
         (MyArrayOfPointersToPeople[i])->GetDateOfDeath();					// --- Assign date of death ---
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage1();            // --- Assign date of HPV infection ---
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage2();            // --- Recover or progress from HPV infection ---
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage3();            // --- Recover or progress from HPV infection ---\
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage4();            // --- Recover or progress from HPV infection ---
-        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection_Stage5();            // --- Recover or progress from HPV infection ---
+        (MyArrayOfPointersToPeople[i])->GetMyDateOfHPVInfection();            // --- Assign date of HPV infection ---
         if (MyArrayOfPointersToPeople[i]->Sex == 2 && MyArrayOfPointersToPeople[i]->Age<50 && MyArrayOfPointersToPeople[i]->AgeAtDeath>=15) {(MyArrayOfPointersToPeople[i])->GetDateOfBaby();}              // --- Assign Birth of all Children- ---
         (MyArrayOfPointersToPeople[i])->GetMyDateNCD();                     // --- Get date of NCDs ---
         (MyArrayOfPointersToPeople[i])->GetMyDateCancers();                     // --- Get date of NCDs ---
@@ -287,21 +283,16 @@ int main(){
                 MyArrayOfPointersToPeople[i]->Prostate,
                 MyArrayOfPointersToPeople[i]->OtherCan,
                 MyArrayOfPointersToPeople[i]->Stroke_status,             // Check if used and, if not, remove
-                MyArrayOfPointersToPeople[i]->HPV_Status_1,
-                MyArrayOfPointersToPeople[i]->HPV_Status_2,
-                MyArrayOfPointersToPeople[i]->HPV_Status_3,
-                MyArrayOfPointersToPeople[i]->HPV_Status_4,
-                MyArrayOfPointersToPeople[i]->HPV_Status_5,
-                MyArrayOfPointersToPeople[i]->HPV_Recovery_Status,
-                MyArrayOfPointersToPeople[i]->HPV,
-                MyArrayOfPointersToPeople[i]->HPV_Stage2,
-                MyArrayOfPointersToPeople[i]->HPV_Stage3,
-                MyArrayOfPointersToPeople[i]->HPV_Stage4,
-                MyArrayOfPointersToPeople[i]->HPV_Stage5,
-                MyArrayOfPointersToPeople[i]->HPV_Stage1_Recovery,
-                MyArrayOfPointersToPeople[i]->HPV_Stage2_Recovery,
-                MyArrayOfPointersToPeople[i]->HPV_Stage3_Recovery,
-                MyArrayOfPointersToPeople[i]->HPV_Stage4_Recovery
+                MyArrayOfPointersToPeople[i]->HPV_Status,
+                MyArrayOfPointersToPeople[i]->HPV_DateofInfection,
+                MyArrayOfPointersToPeople[i]->CIN1_DateofInfection,
+                MyArrayOfPointersToPeople[i]->CIN2_3_DateofInfection,
+                MyArrayOfPointersToPeople[i]->CIS_DateofInfection,
+                MyArrayOfPointersToPeople[i]->ICC_DateofInfection,
+                MyArrayOfPointersToPeople[i]->HPV_DateofRecovery,
+                MyArrayOfPointersToPeople[i]->CIN1_DateofRecovery,
+                MyArrayOfPointersToPeople[i]->CIN2_3_DateofRecovery,
+                MyArrayOfPointersToPeople[i]->CIS_DateofRecovery
                 );}
     fclose(ProjectZim);
     
@@ -333,21 +324,16 @@ int main(){
     double Oeso_m       =(count_causeofdeath[10]/(double)count_2016deaths)*100;
     double Prostate_m    =(count_causeofdeath[11]/(double)count_2016deaths)*100;
     double OtherCan_m   =(count_causeofdeath[12]/(double)count_2016deaths)*100;
-    double HPV_Status_1_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Status_2_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Status_3_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Status_4_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Status_5_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Recovery_Status_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage2_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage3_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage4_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage5_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage1_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage2_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage3_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
-    double HPV_Stage4_Recovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_Status_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_DateofInfection_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double CIN1_DateofInfection_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double CIN2_3_DateofInfection_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double CIS_DateofInfection_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double ICC_DateofInfection_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double HPV_DateofRecovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double CIN1_DateofRecovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double CIN2_3_DateofRecovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
+    double CIS_DateofRecovery_m        =(count_causeofdeath[13]/(double)count_2016deaths)*100;
     
     // Output the model percentages
     cout << "Background " << background_m << endl;
@@ -363,21 +349,16 @@ int main(){
     cout << "Oeso "       << Oeso_m << endl;
     cout << "Prostate "    << Prostate_m << endl;
     cout << "OtherCan "   << OtherCan_m << endl;
-    cout << "HPV_Status_1_m "        << HPV_Status_1_m << endl;
-    cout << "HPV_Status_2_m "        << HPV_Status_2_m << endl;
-    cout << "HPV_Status_3_m "        << HPV_Status_3_m << endl;
-    cout << "HPV_Status_4_m "        << HPV_Status_4_m << endl;
-    cout << "HPV_Status_5_m "        << HPV_Status_5_m << endl;
-    cout << "HPV_Recovery_Status "        << HPV_Recovery_Status_m << endl;
-    cout << "HPV "        << HPV_m << endl;
-    cout << "HPV_Stage2 "        << HPV_Stage2_m << endl;
-    cout << "HPV_Stage3 "        << HPV_Stage3_m << endl;
-    cout << "HPV_Stage4 "        << HPV_Stage4_m << endl;
-    cout << "HPV_Stage5 "        << HPV_Stage5_m << endl;
-    cout << "HPV_Stage1_Recovery "        << HPV_Stage1_Recovery_m << endl;
-    cout << "HPV_Stage2_Recovery "        << HPV_Stage2_Recovery_m << endl;
-    cout << "HPV_Stage3_Recovery "        << HPV_Stage3_Recovery_m << endl;
-    cout << "HPV_Stage4_Recovery "        << HPV_Stage4_Recovery_m << endl;
+    cout << "HPV_Status_m "        << HPV_Status_m << endl;
+    cout << "HPV_DateofInfection "        << HPV_DateofInfection_m << endl;
+    cout << "CIN1_DateofInfection "        << CIN1_DateofInfection_m << endl;
+    cout << "CIN2_3_DateofInfection "        << CIN2_3_DateofInfection_m << endl;
+    cout << "CIS_DateofInfection "        << CIS_DateofInfection_m << endl;
+    cout << "ICC_DateofInfection "        << ICC_DateofInfection_m << endl;
+    cout << "HPV_DateofRecovery "        << HPV_DateofRecovery_m << endl;
+    cout << "CIN1_DateofRecovery "        << CIN1_DateofRecovery_m << endl;
+    cout << "CIN2_3_DateofRecovery "        << CIN2_3_DateofRecovery_m << endl;
+    cout << "CIS_DateofRecovery "        << CIS_DateofRecovery_m << endl;
 
     
     // Least square calculation

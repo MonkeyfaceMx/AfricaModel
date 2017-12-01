@@ -10,6 +10,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <cmath>
+#include <random>
 #include "person.h"
 #include "event.h"
 #include "eventfunctions.h"
@@ -28,11 +29,14 @@ extern int      nr_Cancers;
 extern          priority_queue<event*, vector<event*>, timeComparison> *p_PQ;
 extern          vector<event*> Events;
 extern double   Sex_ratio;
-extern double   HPV_1_ratio;
-extern double   HPV_2_ratio;
-extern double   HPV_3_ratio;
-extern double   HPV_4_ratio;
-extern double   HPV_5_ratio;
+extern double   HPV_Prevalence;
+extern double   CIN1_Prevalence;
+extern double   CIN2_3_Prevalence;
+extern double   CIS_Prevalence;
+extern double   ICC_Prevalence;
+float TestCIN1Date=0;
+int k=-988;
+int m=2;
 
 
 //// --- POINTERS TO EXTERNAL ARRAYS --- ////
@@ -87,22 +91,18 @@ person::person()											// First 'person' class second constructor/variable a
     Alive=-999;
     
     HIV=-999;                                               // --- Variables related to HIV-infection ---
-    HPV_Status_1=-999;
-    HPV_Status_2=-999;
-    HPV_Status_3=-999;
-    HPV_Status_4=-999;
-    HPV_Status_5=-999;
     
-    HPV_Recovery_Status=-999;
-    HPV=-999;
-    HPV_Stage2=-999;
-    HPV_Stage3=-999;
-    HPV_Stage4=-999;
-    HPV_Stage5=-999;
-    HPV_Stage1_Recovery=-999;
-    HPV_Stage2_Recovery=-999;
-    HPV_Stage3_Recovery=-999;
-    HPV_Stage4_Recovery=-999;
+    HPV_Status=-999;
+    HPV_DateofInfection=-999;
+    CIN1_DateofInfection=-999;
+    CIN2_3_DateofInfection=-999;
+    CIS_DateofInfection=-999;
+    ICC_DateofInfection=-999;
+    HPV_DateofRecovery=-999;
+    CIN1_DateofRecovery=-999;
+    CIN2_3_DateofRecovery=-999;
+    CIS_DateofRecovery=-999;
+    
     CD4_cat_start=-999;                                     // CD4 at HIV infection
     CD4_cat_ARTstart=-999;
     CD4_cat=-999;											// Where 0=>500, 1=350-500, 2=250-350, 3=200-250, 4=100-200, 5=50-100, and 6=<50
@@ -352,373 +352,63 @@ void person::GetMyDoBNewEntry(){							// --- Assign Age for New Entry ---
 
 //// --- FUNCTIONS RELATED TO HPV --- ////
 ///////////////////////////////////////////   STAGE 1 /////////////////////////////////////////////
-void person::GetMyDateOfHPVInfection_Stage1(){
+void person::GetMyDateOfHPVInfection(){
     
 //    cout << "Lets see if this person will get HPV!" << endl;
     
-    if(DoB>=1900 && Alive==1 && Sex==2){                                            // Only people born from 1900 can ever experience HIV in their life
-        
-       // REMOVEW THIS
-        int year = floor(*p_GT);
-        double months = floor(((1-(*p_GT-year+0.01))*12));
-        double fractionyear = 1-(*p_GT-year);
-        // cout << "HPV" << HPV << endl;
+    if(DoB>=1900 && Alive==1 && Sex==2){        // Only people born from 1900 can ever experience HIV in their life
         // Let's see when people are getting infected with HPV
-        if(HPV==-999){
+        if(HPV_DateofInfection==-999){
             // J NEEdS TO BE UPDATED PICK FORM A UNIFORM DISTRUBTION 15-65 - later want more young 15-25
-            int j=0;                                                // This will be matched to probability taken from random number generator
+            int year = floor(*p_GT);
+            double months = floor(((1-(*p_GT-year+0.01))*12));
+            double fractionyear = 1-(*p_GT-year);
+            
+            int j=0;
+            std::random_device rd;
+            std::mt19937 gen{rd()};
+            std::uniform_int_distribution<> dis{15, 65};
+            j = dis(gen);
+            cout <<"j: "<< j<< endl;
+            
             float TestHPVDate=0;
             double YearFraction=-999;
             if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
             if(months<1){YearFraction=0;}
             double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
-            // cout << "h:" << h << endl;
-            if (h>HPV_1_ratio){HPV=-988;}                // In case they do NOT get HPV ever
-                if (h<=HPV_1_ratio){                        // In case they DO get HPV in their life
+            if (h>HPV_Prevalence){HPV_DateofInfection=-988;}                // In case they do NOT get HPV ever
+                if (h<=HPV_Prevalence){                        // In case they DO get HPV in their life
                     TestHPVDate=(DoB+j)+YearFraction;
-              //      cout << "TestHPVDate" << TestHPVDate << endl;
-                    
-                    // NEVER HARD CODE - make centrally avaible
-                    if (TestHPVDate<DateOfDeath && TestHPVDate>=1956){HPV=TestHPVDate;}{HPV_Status_1=1;}
-                    if (TestHPVDate>=DateOfDeath && TestHPVDate>=1956) {HPV=-977;}
-                    if (TestHPVDate<1956) {HPV=-989;}
+                    if (TestHPVDate<DateOfDeath){HPV_DateofInfection=TestHPVDate;}{HPV_Status=1;}
+                    if (TestHPVDate>=DateOfDeath) {HPV_DateofInfection=-977;}
                 }
-            //    else {cout << "Error!! We did not assign HPV " << endl;
-            //    }
-            
-   //     cout << "Person ID " << PersonID << " DOB " << DoB << " DateofDeath " << DateOfDeath << " Gender " << Sex << " HPV " << HPV << " h " << h << endl;
-            // Error message:
+                        // Error message:
             if (months>12){cout << "Error 2: There is an error and HPV infection will ocurr in the wrong year: " << months << endl;}
             if (YearFraction>fractionyear){cout << "Error 2: There is an error!" << YearFraction << " and fraction " << fractionyear<< endl;cout << "Global Time "<< *p_GT << " and months " << months << endl;}
             if(YearFraction==-999){cout << "Error 3: Yearfraction hasn't been initialised" << months << endl;}
         }
         
-        
-        
         //// --- Lets feed HPV infection into the eventQ --- ////
-        if (HPV>=*p_GT && HPV<EndYear){
+        if (HPV_DateofInfection>=*p_GT && HPV_DateofInfection<EndYear){
             int p=PersonID-1;
-            event * HPVEvent = new event;
-            Events.push_back(HPVEvent);
-            HPVEvent->time = HPV;
-            HPVEvent->p_fun = &EventMyHPVInfection;
-            HPVEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPVEvent);
+            event * HPV_DateofInfectionEvent = new event;
+            Events.push_back(HPV_DateofInfectionEvent);
+            HPV_DateofInfectionEvent->time = HPV_DateofInfection;
+            HPV_DateofInfectionEvent->p_fun = &EventMyHPVInfection;
+            HPV_DateofInfectionEvent->person_ID = MyArrayOfPointersToPeople[p];
+            p_PQ->push(HPV_DateofInfectionEvent);
         }
     }
-    
-    
+
     //// --- Some warning code - just in case ... --- ////
-    E(if (HPV>-977 && DoB>1900){
+    E(if (HPV_DateofInfection>-977 && DoB>1900){
         cout << endl <<  "This DIDNT WORK!! WARNING!! "<< endl;
-        cout << "HPV: " << HPV << " (Alive: " << Alive << " and Date of Death: " << DateOfDeath << ")" << endl;
+        cout << "HPV: " << HPV_DateofInfection << " (Alive: " << Alive << " and Date of Death: " << DateOfDeath << ")" << endl;
         cout << "Size reservoir: " << HPVReservoir.size() << endl << endl;
     })
     
 };
 
-//////////////////////////////////////STAGE 2////////////////////////////////////////////
-
-void person::GetMyDateOfHPVInfection_Stage2(){
-    
-    //    cout << "Lets see if this person will progress from HPV to CIN1 or recover!" << endl;
-    
-    
-    if(DoB>=1900 && Alive==1 && Sex==2 && HPV>-1){                                            // Only people born from 1900 can ever experience HIV in their life
-        
-        int year = floor(*p_GT);
-        double months = floor(((1-(*p_GT-year+0.01))*12));
-        double fractionyear = 1-(*p_GT-year);
-     //   cout << "HPV" << HPV << endl;
-        // Let's see if people are progressing or recovering
-        if(HPV>-1){
-            int j=0;                                                // This will be matched to probability taken from random number generator
-            float TestHPV_Stage2_Date=0;
-            float TestHPV_Stage1_Date_Recovery=0;
-            double YearFraction=-999;
-            if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
-            if(months<1){YearFraction=0;}
-            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
-            // cout << "h:" << h << endl;
-            
-            if (h>HPV_2_ratio){TestHPV_Stage1_Date_Recovery=(HPV+j)+YearFraction;}{HPV_Stage1_Recovery=TestHPV_Stage1_Date_Recovery;}{HPV_Stage2=-988;}{HPV_Recovery_Status=1;}      // In case they recover from HPV and are now immune
-            if (h<=HPV_2_ratio){                        // In case they progress from HPV to CIN1
-                TestHPV_Stage2_Date=(HPV+j)+YearFraction;
-                //      cout << "TestHPVDate" << TestHPVDate << endl;
-                if (TestHPV_Stage2_Date<DateOfDeath && TestHPV_Stage2_Date>=1956){HPV_Stage2=TestHPV_Stage2_Date;}{HPV_Status_2=1;}
-                if (TestHPV_Stage2_Date>=DateOfDeath && TestHPV_Stage2_Date>=1956) {HPV_Stage2=-977;}
-            //    if (TestHPV_Stage2_Date<1956) {HPV=-989;}
-            }
-            //    else {cout << "Error!! We did not assign HPV " << endl;
-            //    }
-            
-            //     cout << "Person ID " << PersonID << " DOB " << DoB << " DateofDeath " << DateOfDeath << " Gender " << Sex << " HPV " << HPV << " h " << h << endl;
-       //     cout << "HPV " << HPV << " HPV_STAGE 2 " << HPV_Stage2 << " Date of death " << DateOfDeath << endl;
-            // Error message:
-            if (months>12){cout << "Error 2: There is an error and HPV infection will ocurr in the wrong year: " << months << endl;}
-            if (YearFraction>fractionyear){cout << "Error 2: There is an error!" << YearFraction << " and fraction " << fractionyear<< endl;cout << "Global Time "<< *p_GT << " and months " << months << endl;}
-            if(YearFraction==-999){cout << "Error 3: Yearfraction hasn't been initialised" << months << endl;}
-        }
-        
-        
-        
-        //// --- Lets feed HPV infection into the eventQ --- ////
-        if (HPV_Stage2>=*p_GT && HPV_Stage2<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage2Event = new event;
-            Events.push_back(HPV_Stage2Event);
-            HPV_Stage2Event->time = HPV_Stage2;
-            HPV_Stage2Event->p_fun = &EventMyHPVInfection_Stage2;
-            HPV_Stage2Event->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage2Event);
-        }
-    
-        if (HPV_Stage1_Recovery>=*p_GT && HPV_Stage1_Recovery<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage1_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage1_RecoveryEvent);
-            HPV_Stage1_RecoveryEvent->time = HPV_Stage1_Recovery;
-            HPV_Stage1_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage2;
-            HPV_Stage1_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage1_RecoveryEvent);
-        }
-    }
-    
-    
-    //// --- Some warning code - just in case ... --- ////
-    E(if (HPV_Stage2>-977 && DoB>1900){
-        cout << endl <<  "This DIDNT WORK!! WARNING!! "<< endl;
-        cout << "HPV: " << HPV << " (Alive: " << Alive << " and Date of Death: " << DateOfDeath << ")" << endl;
-        cout << "Size reservoir: " << HPVReservoir.size() << endl << endl;
-    })
-    
-};
-
-//////////////////////////////////////STAGE 3////////////////////////////////////////////
-
-void person::GetMyDateOfHPVInfection_Stage3(){
-    
-    //    cout << "Lets see if this person will progress from HPV to CIN1 or recover!" << endl;
-    
-    
-    if(DoB>=1900 && Alive==1 && Sex==2 && HPV_Stage2>-1){                                            // Only people born from 1900 can ever experience HIV in their life
-        
-        int year = floor(*p_GT);
-        double months = floor(((1-(*p_GT-year+0.01))*12));
-        double fractionyear = 1-(*p_GT-year);
-        //   cout << "HPV" << HPV << endl;
-        // Let's see if people are progressing or recovering
-        if(HPV_Stage2>-1){
-            int j=0;                                                // This will be matched to probability taken from random number generator
-            float TestHPV_Stage3_Date=0;
-            float TestHPV_Stage2_Date_Recovery=0;
-            double YearFraction=-999;
-            if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
-            if(months<1){YearFraction=0;}
-            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
-            // cout << "h:" << h << endl;
-            if (h>HPV_3_ratio){TestHPV_Stage2_Date_Recovery=(HPV_Stage2+j)+YearFraction;}{HPV_Stage2_Recovery=TestHPV_Stage2_Date_Recovery;}{HPV_Stage3=-988;}{HPV_Recovery_Status=2;}              // In case they recover from HPV and are now immune
-            if (h<=HPV_3_ratio){                        // In case they progress from HPV to CIN1
-                TestHPV_Stage3_Date=(HPV_Stage2+j)+YearFraction;
-                //      cout << "TestHPVDate" << TestHPVDate << endl;
-                if (TestHPV_Stage3_Date<DateOfDeath && TestHPV_Stage3_Date>=1956){HPV_Stage3=TestHPV_Stage3_Date;}{HPV_Status_3=1;}
-                if (TestHPV_Stage3_Date>=DateOfDeath && TestHPV_Stage3_Date>=1956) {HPV_Stage3=-977;}
-                //    if (TestHPV_Stage2_Date<1956) {HPV=-989;}
-            }
-            //    else {cout << "Error!! We did not assign HPV " << endl;
-            //    }
-            
-            //     cout << "Person ID " << PersonID << " DOB " << DoB << " DateofDeath " << DateOfDeath << " Gender " << Sex << " HPV " << HPV << " h " << h << endl;
-            //     cout << "HPV " << HPV << " HPV_STAGE 2 " << HPV_Stage2 << " Date of death " << DateOfDeath << endl;
-            // Error message:
-            if (months>12){cout << "Error 2: There is an error and HPV infection will ocurr in the wrong year: " << months << endl;}
-            if (YearFraction>fractionyear){cout << "Error 2: There is an error!" << YearFraction << " and fraction " << fractionyear<< endl;cout << "Global Time "<< *p_GT << " and months " << months << endl;}
-            if(YearFraction==-999){cout << "Error 3: Yearfraction hasn't been initialised" << months << endl;}
-        }
-        
-        
-        
-        //// --- Lets feed HPV infection into the eventQ --- ////
-        if (HPV_Stage3>=*p_GT && HPV_Stage3<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage3Event = new event;
-            Events.push_back(HPV_Stage3Event);
-            HPV_Stage3Event->time = HPV_Stage3;
-            HPV_Stage3Event->p_fun = &EventMyHPVInfection_Stage3;
-            HPV_Stage3Event->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage3Event);
-        }
-        if (HPV_Stage2_Recovery>=*p_GT && HPV_Stage2_Recovery<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage2_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage2_RecoveryEvent);
-            HPV_Stage2_RecoveryEvent->time = HPV_Stage2_Recovery;
-            HPV_Stage2_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage3;
-            HPV_Stage2_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage2_RecoveryEvent);
-        }
-    }
-    
-    
-    //// --- Some warning code - just in case ... --- ////
-    E(if (HPV_Stage3>-977 && DoB>1900){
-        cout << endl <<  "This DIDNT WORK!! WARNING!! "<< endl;
-        cout << "HPV: " << HPV << " (Alive: " << Alive << " and Date of Death: " << DateOfDeath << ")" << endl;
-        cout << "Size reservoir: " << HPVReservoir.size() << endl << endl;
-    })
-    
-};
-
-//////////////////////////////////////STAGE 4////////////////////////////////////////////
-
-void person::GetMyDateOfHPVInfection_Stage4(){
-    
-    //    cout << "Lets see if this person will progress from HPV to CIN1 or recover!" << endl;
-    
-    
-    if(DoB>=1900 && Alive==1 && Sex==2 && HPV_Stage3>-1){                                            // Only people born from 1900 can ever experience HIV in their life
-        
-        int year = floor(*p_GT);
-        double months = floor(((1-(*p_GT-year+0.01))*12));
-        double fractionyear = 1-(*p_GT-year);
-        //   cout << "HPV" << HPV << endl;
-        // Let's see if people are progressing or recovering
-        if(HPV_Stage3>-1){
-            int j=0;                                                // This will be matched to probability taken from random number generator
-            float TestHPV_Stage4_Date=0;
-            float TestHPV_Stage3_Date_Recovery=0;
-            double YearFraction=-999;
-            if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
-            if(months<1){YearFraction=0;}
-            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
-            // cout << "h:" << h << endl;
-            if (h>HPV_4_ratio){TestHPV_Stage3_Date_Recovery=(HPV_Stage3+j)+YearFraction;}{HPV_Stage3_Recovery=TestHPV_Stage3_Date_Recovery;}{HPV_Stage4=-988;}{HPV_Recovery_Status=3;}              // In case they recover from HPV and are now immune
-            if (h<=HPV_4_ratio){                        // In case they progress from HPV to CIN1
-                TestHPV_Stage4_Date=(HPV_Stage3+j)+YearFraction;
-                //      cout << "TestHPVDate" << TestHPVDate << endl;
-                if (TestHPV_Stage4_Date<DateOfDeath && TestHPV_Stage4_Date>=1956){HPV_Stage4=TestHPV_Stage4_Date;}{HPV_Status_4=1;}
-                if (TestHPV_Stage4_Date>=DateOfDeath && TestHPV_Stage4_Date>=1956) {HPV_Stage4=-977;}
-                //    if (TestHPV_Stage2_Date<1956) {HPV=-989;}
-            }
-            //    else {cout << "Error!! We did not assign HPV " << endl;
-            //    }
-            
-            //     cout << "Person ID " << PersonID << " DOB " << DoB << " DateofDeath " << DateOfDeath << " Gender " << Sex << " HPV " << HPV << " h " << h << endl;
-            //     cout << "HPV " << HPV << " HPV_STAGE 2 " << HPV_Stage2 << " Date of death " << DateOfDeath << endl;
-            // Error message:
-            if (months>12){cout << "Error 2: There is an error and HPV infection will ocurr in the wrong year: " << months << endl;}
-            if (YearFraction>fractionyear){cout << "Error 2: There is an error!" << YearFraction << " and fraction " << fractionyear<< endl;cout << "Global Time "<< *p_GT << " and months " << months << endl;}
-            if(YearFraction==-999){cout << "Error 3: Yearfraction hasn't been initialised" << months << endl;}
-        }
-        
-        
-        
-        //// --- Lets feed HPV infection into the eventQ --- ////
-        if (HPV_Stage4>=*p_GT && HPV_Stage4<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage4Event = new event;
-            Events.push_back(HPV_Stage4Event);
-            HPV_Stage4Event->time = HPV_Stage4;
-            HPV_Stage4Event->p_fun = &EventMyHPVInfection_Stage4;
-            HPV_Stage4Event->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage4Event);
-        }
-        if (HPV_Stage3_Recovery>=*p_GT && HPV_Stage3_Recovery<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage3_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage3_RecoveryEvent);
-            HPV_Stage3_RecoveryEvent->time = HPV_Stage3_Recovery;
-            HPV_Stage3_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage4;
-            HPV_Stage3_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage3_RecoveryEvent);
-        }
-    }
-    
-    
-    //// --- Some warning code - just in case ... --- ////
-    E(if (HPV_Stage4>-977 && DoB>1900){
-        cout << endl <<  "This DIDNT WORK!! WARNING!! "<< endl;
-        cout << "HPV: " << HPV << " (Alive: " << Alive << " and Date of Death: " << DateOfDeath << ")" << endl;
-        cout << "Size reservoir: " << HPVReservoir.size() << endl << endl;
-    })
-    
-};
-
-
-//////////////////////////////////////STAGE 4////////////////////////////////////////////
-
-void person::GetMyDateOfHPVInfection_Stage5(){
-    
-    //    cout << "Lets see if this person will progress from HPV to CIN1 or recover!" << endl;
-    
-    
-    if(DoB>=1900 && Alive==1 && Sex==2 && HPV_Stage4>-1){                                            // Only people born from 1900 can ever experience HIV in their life
-        
-        int year = floor(*p_GT);
-        double months = floor(((1-(*p_GT-year+0.01))*12));
-        double fractionyear = 1-(*p_GT-year);
-        //   cout << "HPV" << HPV << endl;
-        // Let's see if people are progressing or recovering
-        if(HPV_Stage4>-1){
-            int j=0;                                                // This will be matched to probability taken from random number generator
-            float TestHPV_Stage5_Date=0;
-            float TestHPV_Stage4_Date_Recovery=0;
-            double YearFraction=-999;
-            if(months>=1){YearFraction=(RandomMinMax(0,months))/12.1;}            // This gets month of birth as a fraction of a year
-            if(months<1){YearFraction=0;}
-            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
-            // cout << "h:" << h << endl;
-            if (h>HPV_5_ratio){TestHPV_Stage4_Date_Recovery=(HPV_Stage4+j)+YearFraction;}{HPV_Stage4_Recovery=TestHPV_Stage4_Date_Recovery;}{HPV_Stage5=-988;}{HPV_Recovery_Status=4;}              // In case they recover from HPV and are now immune
-            if (h<=HPV_5_ratio){                        // In case they progress from HPV to CIN1
-                TestHPV_Stage5_Date=(HPV_Stage4+j)+YearFraction;
-                //      cout << "TestHPVDate" << TestHPVDate << endl;
-                if (TestHPV_Stage5_Date<DateOfDeath && TestHPV_Stage5_Date>=1956){HPV_Stage5=TestHPV_Stage5_Date;}{HPV_Status_5=1;}
-                if (TestHPV_Stage5_Date>=DateOfDeath && TestHPV_Stage5_Date>=1956) {HPV_Stage5=-977;}
-                //    if (TestHPV_Stage2_Date<1956) {HPV=-989;}
-            }
-            //    else {cout << "Error!! We did not assign HPV " << endl;
-            //    }
-            
-            //     cout << "Person ID " << PersonID << " DOB " << DoB << " DateofDeath " << DateOfDeath << " Gender " << Sex << " HPV " << HPV << " h " << h << endl;
-            //     cout << "HPV " << HPV << " HPV_STAGE 2 " << HPV_Stage2 << " Date of death " << DateOfDeath << endl;
-            // Error message:
-            if (months>12){cout << "Error 2: There is an error and HPV infection will ocurr in the wrong year: " << months << endl;}
-            if (YearFraction>fractionyear){cout << "Error 2: There is an error!" << YearFraction << " and fraction " << fractionyear<< endl;cout << "Global Time "<< *p_GT << " and months " << months << endl;}
-            if(YearFraction==-999){cout << "Error 3: Yearfraction hasn't been initialised" << months << endl;}
-        }
-        
-        
-        
-        //// --- Lets feed HPV infection into the eventQ --- ////
-        if (HPV_Stage5>=*p_GT && HPV_Stage5<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage5Event = new event;
-            Events.push_back(HPV_Stage5Event);
-            HPV_Stage5Event->time = HPV_Stage5;
-            HPV_Stage5Event->p_fun = &EventMyHPVInfection_Stage5;
-            HPV_Stage5Event->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage5Event);
-        }
-        if (HPV_Stage4_Recovery>=*p_GT && HPV_Stage4_Recovery<EndYear){
-            int p=PersonID-1;
-            event * HPV_Stage4_RecoveryEvent = new event;
-            Events.push_back(HPV_Stage4_RecoveryEvent);
-            HPV_Stage4_RecoveryEvent->time = HPV_Stage4_Recovery;
-            HPV_Stage4_RecoveryEvent->p_fun = &EventMyHPVInfection_Stage5;
-            HPV_Stage4_RecoveryEvent->person_ID = MyArrayOfPointersToPeople[p];
-            p_PQ->push(HPV_Stage4_RecoveryEvent);
-        }
-    }
-    
-    
-    //// --- Some warning code - just in case ... --- ////
-    E(if (HPV_Stage5>-977 && DoB>1900){
-        cout << endl <<  "This DIDNT WORK!! WARNING!! "<< endl;
-        cout << "HPV: " << HPV << " (Alive: " << Alive << " and Date of Death: " << DateOfDeath << ")" << endl;
-        cout << "Size reservoir: " << HPVReservoir.size() << endl << endl;
-    })
-    
-};
 
 //// --- FUNCTIONS RELATED TO HIV --- ////
 

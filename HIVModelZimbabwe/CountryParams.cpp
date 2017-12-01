@@ -26,11 +26,11 @@ extern int ART_start_yr;
 extern int factor;
 extern int ageAdult;
 extern double Sex_ratio;
-extern double HPV_1_ratio;
-extern double HPV_2_ratio;
-extern double HPV_3_ratio;
-extern double HPV_4_ratio;
-extern double HPV_5_ratio;
+extern double HPV_Prevalence;
+extern double CIN1_Prevalence;
+extern double CIN2_3_Prevalence;
+extern double CIS_Prevalence;
+extern double ICC_Prevalence;
 
 extern double ARTbuffer;
 extern double MortAdj;
@@ -140,11 +140,11 @@ else if (x == 4){                                          // Uasin Gishu - KENY
     ART_start_yr=2004;
     ageAdult=15;
     Sex_ratio=0.50237783022;
-    HPV_1_ratio=0.388;
-    HPV_2_ratio=0.2;
-    HPV_3_ratio=0.4;
-    HPV_4_ratio=0.65;
-    HPV_5_ratio=1.0;
+    HPV_Prevalence=0.388;
+    CIN1_Prevalence=0.2;
+    CIN2_3_Prevalence=0.4;
+    CIS_Prevalence=0.65;
+    ICC_Prevalence=1.0;
     ARTbuffer=1.01;
     MortAdj=1;
     // Mortality percentages from GBD 2016

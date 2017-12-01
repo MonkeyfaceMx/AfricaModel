@@ -12,6 +12,8 @@
 #include <ctime>
 #include <math.h>                                                          
 #include <vector>
+#include <random>
+#include <cmath>
 #include "eventfunctions.h"
 #include "event.h"
 #include "eventQ.h"
@@ -52,7 +54,28 @@ extern int*      NCDAgeArrayMax;
 extern double** DeathArray_Women;
 extern double** DeathArray_Men;
 
+extern double   HPV_Prevalence;
+extern double   CIN1_Prevalence;
+extern double   CIN2_3_Prevalence;
+extern double   CIS_Prevalence;
+extern double   ICC_Prevalence;
 
+extern double HPV_DateofInfection;
+extern double CIN1_DateofInfection;
+extern double CIN2_3_DateofInfection;
+extern double CIS_DateofInfection;
+extern double ICC_DateofInfection;
+
+extern double HPV_DateofRecovery;
+extern double CIN1_DateofRecovery;
+extern double CIN2_3_DateofRecovery;
+extern double CIS_DateofRecovery;
+
+extern double DateOfDeath;
+extern int HPV_Status;
+extern int k;
+extern int m;
+extern float TestCIN1Date;
 
 //// --- Important Internal informtaion --- ////
 int RandomMinMax_2(int min, int max){							// Provide function for random number generator between min and max number
@@ -370,11 +393,7 @@ void EventBirth(person *MyPointerToPerson){
         (MyArrayOfPointersToPeople[total_population-1])->GetDateOfBaby();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateNCD();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateCancers();
-        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage1();
-        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage2();
-        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage3();
-        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage4();
-        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection_Stage5();
+        (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHPVInfection();
         (MyArrayOfPointersToPeople[total_population-1])->GetMyDateOfHIVInfection();
     
         
@@ -394,119 +413,67 @@ void EventBirth(person *MyPointerToPerson){
 void EventMyHPVInfection(person *MyPointerToPerson){
     
     E(cout << "Somebody is about to get infected with HPV: " << endl;)            // Error message - can be switched on/off
-    // AND NOT ON TREATMENT // IN THE RIGHT STAGE
     if(MyPointerToPerson->Alive == 1 ) {                                            // Only execute this is patient is still alove
         
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV: " << MyPointerToPerson->HPV<< endl;
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_DateofInfection: " << MyPointerToPerson->HPV_DateofInfection<< endl;
         }
-        
         MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
         
+        ///Decide if person recovers or moves on to CIN1
+        if (MyPointerToPerson->HPV_DateofInfection>0 && MyPointerToPerson->HPV_Status==1){
+            int year = floor(*p_GT);
+            double months = floor(((1-(*p_GT-year+0.01))*12));
+            
+            int j=0;
+            int n=-977;
+            float TestCIN1Date=0;
+            std::random_device rd;
+            std::mt19937 gen{rd()};
+            std::uniform_int_distribution<> dis{0, 3};
+            j = dis(gen);
+            cout <<"j: "<< j<< endl;
+            
+            double YearFraction=-999;
+            if(months>=1){YearFraction=(RandomMinMax_2(0,months))/12.1;}            // This gets month of birth as a fraction of a year
+            if(months<1){YearFraction=0;}
+            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
+            if (h>CIN1_Prevalence){CIN1_DateofInfection=MyPointerToPerson->k;}{HPV_DateofRecovery=MyPointerToPerson->TestCIN1Date;}                // In case they recover from HPV
+        
+             event * HPV_DateofRecoveryEvent = new event;
+             Events.push_back(HPV_DateofRecoveryEvent);
+             HPV_DateofRecoveryEvent->time = HPV_DateofRecovery;
+             HPV_DateofRecoveryEvent->p_fun = &EventMyHPVRecovery;
+             HPV_DateofRecoveryEvent->person_ID = MyPointerToPerson;
+             p_PQ->push(HPV_DateofRecoveryEvent);
+            
+            if (h<=CIN1_Prevalence){                        // In case they progress to CIN1
+                TestCIN1Date=(HPV_DateofInfection+j)+YearFraction;
+                if (TestCIN1Date<MyPointerToPerson->DateOfDeath){CIN1_DateofInfection=MyPointerToPerson->TestCIN1Date;}{HPV_Status=MyPointerToPerson->m;}
+                
+                 event * CIN1_DateofInfectionEvent = new event;
+                 Events.push_back(CIN1_DateofInfectionEvent);
+                 CIN1_DateofInfectionEvent->time = CIN1_DateofInfection;
+                 CIN1_DateofInfectionEvent->p_fun = &EventMyCIN1Infection;
+                 CIN1_DateofInfectionEvent->person_ID = MyPointerToPerson;
+                 p_PQ->push(CIN1_DateofInfectionEvent);
+                
+            if (TestCIN1Date>=MyPointerToPerson->DateOfDeath) {CIN1_DateofInfection=n;}
+                
+                }
+            }
+            
     }
-    
-    // Deciside this person recovers next or moves ot CN1
-    // Schedule event and push into vent queue
-    
-    
     
     E(cout << "Somebody has just been infected with HPV!" << endl;)                // Error message - can be switched on/off
 }
 
+void EventMyCIN1Infection(person *MyPointerToPerson){}
+
+void EventMyHPVRecovery(person *MyPointerToPerson){}
+
 
 // Recovery FUnction
-
-//// --- HPV EVENT --- Stage 2 ////
-
-void EventMyHPVInfection_Stage2(person *MyPointerToPerson){
-    
-    E(cout << "Somebody is about to get recover or progress from HPV: " << endl;)            // Error message - can be switched on/off
-    
-    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage2){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage2: " << MyPointerToPerson->HPV_Stage2<< endl;
-        }
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage1_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage1_Recovery: " << MyPointerToPerson->HPV_Stage1_Recovery<< endl;
-        }
-        
-        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
-        
-    }
-    
-    E(cout << "Somebody has just been recovered/progressed from HPV!" << endl;)                // Error message - can be switched on/off
-}
-
-//// --- HPV EVENT --- Stage 3 ////
-
-void EventMyHPVInfection_Stage3(person *MyPointerToPerson){
-    
-    E(cout << "Somebody is about to get recover or progress from HPV: " << endl;)            // Error message - can be switched on/off
-    
-    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage3){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage3: " << MyPointerToPerson->HPV_Stage3<< endl;
-        }
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage2_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage2_Recovery: " << MyPointerToPerson->HPV_Stage2_Recovery<< endl;
-        }
-        
-        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
-        
-    }
-    
-    E(cout << "Somebody has just been recovered/progressed from HPV!" << endl;)                // Error message - can be switched on/off
-}
-
-//// --- HPV EVENT --- Stage 4 ////
-
-void EventMyHPVInfection_Stage4(person *MyPointerToPerson){
-    
-    E(cout << "Somebody is about to get recover or progress from HPV: " << endl;)            // Error message - can be switched on/off
-    
-    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage4){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage4: " << MyPointerToPerson->HPV_Stage4<< endl;
-        }
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage3_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage3_Recovery: " << MyPointerToPerson->HPV_Stage3_Recovery<< endl;
-        }
-        
-        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
-        
-    }
-    
-    E(cout << "Somebody has just been recovered/progressed from HPV!" << endl;)                // Error message - can be switched on/off
-}
-
-//// --- HPV EVENT --- Stage 5 ////
-
-void EventMyHPVInfection_Stage5(person *MyPointerToPerson){
-    
-    E(cout << "Somebody is about to get recover or progress from HPV: " << endl;)            // Error message - can be switched on/off
-    
-    if(MyPointerToPerson->Alive == 1) {                                            // Only execute this is patient is still alove
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage5){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage5: " << MyPointerToPerson->HPV_Stage5<< endl;
-        }
-        
-        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_Stage4_Recovery){
-            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_Stage4_Recovery: " << MyPointerToPerson->HPV_Stage4_Recovery<< endl;
-        }
-        
-        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
-        
-    }
-    
-    E(cout << "Somebody has just been recovered/progressed from HPV!" << endl;)                // Error message - can be switched on/off
-}
 
 
 //// --- HIV EVENT --- ////

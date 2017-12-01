@@ -40,26 +40,25 @@ public:
     int AgeAtDeath;
     
     double HIV; // -- Variables related to HIV --
-    double HPV_Status_1;
-    double HPV_Status_2;
-    double HPV_Status_3;
-    double HPV_Status_4;
-    double HPV_Status_5;
-    double HPV_Recovery_Status;
-    double HPV;
-    double HPV_Stage2;
-    double HPV_Stage3;
-    double HPV_Stage4;
-    double HPV_Stage5;
-    double HPV_Stage1_Recovery;
-    double HPV_Stage2_Recovery;
-    double HPV_Stage3_Recovery;
-    double HPV_Stage4_Recovery;
+    double HPV_Status;
+    double HPV_DateofInfection;
+    double CIN1_DateofInfection;
+    double CIN2_3_DateofInfection;
+    double CIS_DateofInfection;
+    double ICC_DateofInfection;
+    double HPV_DateofRecovery;
+    double CIN1_DateofRecovery;
+    double CIN2_3_DateofRecovery;
+    double CIS_DateofRecovery;
     int CD4_cat_start;
     int CD4_cat_ARTstart;
     int CD4_cat;
     vector<double> CD4_change;
     int ART;
+    
+    float TestCIN1Date;
+    int k;
+    int m;
     
     double HT;                                      // -- Variables related to NCDs --
     int HT_status;
@@ -121,19 +120,7 @@ public:
     void GetMyDoBNewEntry();						// Function to assign age 0 to babies
     
     // --- Date of HPV Infection ---
-    void GetMyDateOfHPVInfection_Stage1();
-
-    // --- HPV - Progress or Recover/Immune ---
-    void GetMyDateOfHPVInfection_Stage2();
-
-    // --- HPV - Progress or Recover/Immune ---
-    void GetMyDateOfHPVInfection_Stage3();
-    
-    // --- HPV - Progress or Recover/Immune ---
-    void GetMyDateOfHPVInfection_Stage4();
-    
-    // --- HPV - Progress or Recover/Immune ---
-    void GetMyDateOfHPVInfection_Stage5();
+    void GetMyDateOfHPVInfection();
     
     // --- Date of Infection ---
     void GetMyDateOfHIVInfection();
