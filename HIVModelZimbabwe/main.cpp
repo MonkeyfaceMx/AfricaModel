@@ -248,7 +248,7 @@ int main(){
     
     
     for (int i=0; i<total_population; i++) {								// Note: If adding more variables to be output, need to adapt the %x
-        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f \n",
+        fprintf(ProjectZim,"%d, %d, %f, %f, %d, %d, %f, %d, %f, %d, %d, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %d, %f, %f, %f, %f, %f, %f, %f, %f, %f, %f \n",
                 MyArrayOfPointersToPeople[i]->PersonID,
                 MyArrayOfPointersToPeople[i]->Sex,
                 MyArrayOfPointersToPeople[i]->DoB,

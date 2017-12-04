@@ -74,8 +74,17 @@ extern double CIS_DateofRecovery;
 extern double DateOfDeath;
 extern int HPV_Status;
 extern int k;
-extern int m;
+extern int HPV_Status_HPV;
+extern int HPV_Status_CIN1;
+extern int HPV_Status_CIN2_3;
+extern int HPV_Status_CIS;
+extern int HPV_Status_ICC;
+extern int HPV_Status_Recovered;
 extern float TestCIN1Date;
+extern float TestCIN2_3Date;
+extern float TestCISDate;
+extern float TestICCDate;
+
 
 //// --- Important Internal informtaion --- ////
 int RandomMinMax_2(int min, int max){							// Provide function for random number generator between min and max number
@@ -412,7 +421,7 @@ void EventBirth(person *MyPointerToPerson){
 
 void EventMyHPVInfection(person *MyPointerToPerson){
     
-    E(cout << "Somebody is about to get infected with HPV: " << endl;)            // Error message - can be switched on/off
+    E(cout << "Somebody is about to get infected with HPV or recover: " << endl;)            // Error message - can be switched on/off
     if(MyPointerToPerson->Alive == 1 ) {                                            // Only execute this is patient is still alove
         
         if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_DateofInfection){
@@ -421,24 +430,25 @@ void EventMyHPVInfection(person *MyPointerToPerson){
         MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
         
         ///Decide if person recovers or moves on to CIN1
-        if (MyPointerToPerson->HPV_DateofInfection>0 && MyPointerToPerson->HPV_Status==1){
+        if (MyPointerToPerson->HPV_DateofInfection>0 && MyPointerToPerson->HPV_Status==HPV_Status_HPV){
             int year = floor(*p_GT);
             double months = floor(((1-(*p_GT-year+0.01))*12));
             
             int j=0;
             int n=-977;
-            float TestCIN1Date=0;
+            //float TestCIN1Date=0;
             std::random_device rd;
             std::mt19937 gen{rd()};
             std::uniform_int_distribution<> dis{0, 3};
             j = dis(gen);
-            cout <<"j: "<< j<< endl;
+     //       cout <<"j: "<< j<< endl;
             
             double YearFraction=-999;
             if(months>=1){YearFraction=(RandomMinMax_2(0,months))/12.1;}            // This gets month of birth as a fraction of a year
             if(months<1){YearFraction=0;}
             double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
-            if (h>CIN1_Prevalence){CIN1_DateofInfection=MyPointerToPerson->k;}{HPV_DateofRecovery=MyPointerToPerson->TestCIN1Date;}                // In case they recover from HPV
+            TestCIN1Date=(HPV_DateofInfection+j)+YearFraction;
+            if (h>CIN1_Prevalence){CIN1_DateofInfection=MyPointerToPerson->k;}{HPV_DateofRecovery=MyPointerToPerson->TestCIN1Date;}{HPV_Status=MyPointerToPerson->HPV_Status_Recovered;}                // In case they recover from HPV
         
              event * HPV_DateofRecoveryEvent = new event;
              Events.push_back(HPV_DateofRecoveryEvent);
@@ -448,8 +458,7 @@ void EventMyHPVInfection(person *MyPointerToPerson){
              p_PQ->push(HPV_DateofRecoveryEvent);
             
             if (h<=CIN1_Prevalence){                        // In case they progress to CIN1
-                TestCIN1Date=(HPV_DateofInfection+j)+YearFraction;
-                if (TestCIN1Date<MyPointerToPerson->DateOfDeath){CIN1_DateofInfection=MyPointerToPerson->TestCIN1Date;}{HPV_Status=MyPointerToPerson->m;}
+                 if (TestCIN1Date<MyPointerToPerson->DateOfDeath){CIN1_DateofInfection=MyPointerToPerson->TestCIN1Date;}{HPV_Status=MyPointerToPerson->HPV_Status_CIN1;}
                 
                  event * CIN1_DateofInfectionEvent = new event;
                  Events.push_back(CIN1_DateofInfectionEvent);
@@ -458,7 +467,7 @@ void EventMyHPVInfection(person *MyPointerToPerson){
                  CIN1_DateofInfectionEvent->person_ID = MyPointerToPerson;
                  p_PQ->push(CIN1_DateofInfectionEvent);
                 
-            if (TestCIN1Date>=MyPointerToPerson->DateOfDeath) {CIN1_DateofInfection=n;}
+                 if (TestCIN1Date>=MyPointerToPerson->DateOfDeath) {CIN1_DateofInfection=n;}
                 
                 }
             }
@@ -468,12 +477,225 @@ void EventMyHPVInfection(person *MyPointerToPerson){
     E(cout << "Somebody has just been infected with HPV!" << endl;)                // Error message - can be switched on/off
 }
 
-void EventMyCIN1Infection(person *MyPointerToPerson){}
+void EventMyCIN1Infection(person *MyPointerToPerson){
+    E(cout << "Somebody is about to get infected with CIN1 infection or recover: " << endl;)            // Error message - can be switched on/off
+    if(MyPointerToPerson->Alive == 1) {       // Only execute if patient is still alive and has CIN1
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->CIN1_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " CIN1_DateofInfection: " << MyPointerToPerson->CIN1_DateofInfection<< endl;
+        }
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+        ///Decide if person recovers or moves on to CIN2/3
+        if (MyPointerToPerson->CIN1_DateofInfection>0 && MyPointerToPerson->HPV_Status==HPV_Status_CIN1){
+            int year = floor(*p_GT);
+            double months = floor(((1-(*p_GT-year+0.01))*12));
+            
+            int j=0;
+            int n=-977;
+            //float TestCIN2_3Date=0;
+            std::random_device rd;
+            std::mt19937 gen{rd()};
+            std::uniform_int_distribution<> dis{0, 3};
+            j = dis(gen);
+ //           cout <<"j: "<< j<< endl;
+            
+            double YearFraction=-999;
+            if(months>=1){YearFraction=(RandomMinMax_2(0,months))/12.1;}            // This gets month of birth as a fraction of a year
+            if(months<1){YearFraction=0;}
+            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
+            TestCIN2_3Date=(CIN1_DateofInfection+j)+YearFraction;
+            if (h>CIN2_3_Prevalence){CIN2_3_DateofInfection=MyPointerToPerson->k;}{CIN1_DateofRecovery=MyPointerToPerson->TestCIN2_3Date;}{HPV_Status=MyPointerToPerson->HPV_Status_Recovered;}                // In case they recover from CIN1
+            
+            event * CIN1_DateofRecoveryEvent = new event;
+            Events.push_back(CIN1_DateofRecoveryEvent);
+            CIN1_DateofRecoveryEvent->time = CIN1_DateofRecovery;
+            CIN1_DateofRecoveryEvent->p_fun = &EventMyHPVRecovery;
+            CIN1_DateofRecoveryEvent->person_ID = MyPointerToPerson;
+            p_PQ->push(CIN1_DateofRecoveryEvent);
+            
+            if (h<=CIN2_3_Prevalence){                        // In case they progress to CIN1
+                
+                if (TestCIN2_3Date<MyPointerToPerson->DateOfDeath){CIN2_3_DateofInfection=MyPointerToPerson->TestCIN2_3Date;}{HPV_Status=MyPointerToPerson->HPV_Status_CIN2_3;}
+                
+                event * CIN2_3_DateofInfectionEvent = new event;
+                Events.push_back(CIN2_3_DateofInfectionEvent);
+                CIN2_3_DateofInfectionEvent->time = CIN2_3_DateofInfection;
+                CIN2_3_DateofInfectionEvent->p_fun = &EventMyCIN2_3Infection;
+                CIN2_3_DateofInfectionEvent->person_ID = MyPointerToPerson;
+                p_PQ->push(CIN2_3_DateofInfectionEvent);
+                
+                if (TestCIN2_3Date>=MyPointerToPerson->DateOfDeath) {CIN2_3_DateofInfection=n;}
+                
+            }
+        }
+        
+    }
+    
+    E(cout << "Somebody has just been infected with CIN1!" << endl;)                // Error message - can be switched on/off
+}
 
-void EventMyHPVRecovery(person *MyPointerToPerson){}
+void EventMyCIN2_3Infection(person *MyPointerToPerson){
+    E(cout << "Somebody is about to get infected with CIN2_3 infection or recover: " << endl;)            // Error message - can be switched on/off
+    if(MyPointerToPerson->Alive == 1) {       // Only execute if patient is still alive and has CIN1
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->CIN2_3_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " CIN2_3_DateofInfection: " << MyPointerToPerson->CIN2_3_DateofInfection<< endl;
+        }
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+        ///Decide if person recovers or moves on to CIN2/3
+        if (MyPointerToPerson->CIN2_3_DateofInfection>0 && MyPointerToPerson->HPV_Status==HPV_Status_CIN2_3){
+            int year = floor(*p_GT);
+            double months = floor(((1-(*p_GT-year+0.01))*12));
+            
+            int j=0;
+            int n=-977;
+            //float TestCIN2_3Date=0;
+            std::random_device rd;
+            std::mt19937 gen{rd()};
+            std::uniform_int_distribution<> dis{0, 3};
+            j = dis(gen);
+  //          cout <<"j: "<< j<< endl;
+            
+            double YearFraction=-999;
+            if(months>=1){YearFraction=(RandomMinMax_2(0,months))/12.1;}            // This gets month of birth as a fraction of a year
+            if(months<1){YearFraction=0;}
+            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
+            TestCISDate=(CIN2_3_DateofInfection+j)+YearFraction;
+            if (h>CIS_Prevalence){CIS_DateofInfection=MyPointerToPerson->k;}{CIN2_3_DateofRecovery=MyPointerToPerson->TestCISDate;}{HPV_Status=MyPointerToPerson->HPV_Status_Recovered;}                // In case they recover from CIN2_3
+            
+            event * CIN2_3_DateofRecoveryEvent = new event;
+            Events.push_back(CIN2_3_DateofRecoveryEvent);
+            CIN2_3_DateofRecoveryEvent->time = CIN2_3_DateofRecovery;
+            CIN2_3_DateofRecoveryEvent->p_fun = &EventMyHPVRecovery;
+            CIN2_3_DateofRecoveryEvent->person_ID = MyPointerToPerson;
+            p_PQ->push(CIN2_3_DateofRecoveryEvent);
+            
+            if (h<=CIS_Prevalence){                        // In case they progress to CIS
+                
+                if (TestCISDate<MyPointerToPerson->DateOfDeath){CIS_DateofInfection=MyPointerToPerson->TestCISDate;}{HPV_Status=MyPointerToPerson->HPV_Status_CIS;}
+                
+                event * CIS_DateofInfectionEvent = new event;
+                Events.push_back(CIS_DateofInfectionEvent);
+                CIS_DateofInfectionEvent->time = CIS_DateofInfection;
+                CIS_DateofInfectionEvent->p_fun = &EventMyCISInfection;
+                CIS_DateofInfectionEvent->person_ID = MyPointerToPerson;
+                p_PQ->push(CIS_DateofInfectionEvent);
+                
+                if (TestCISDate>=MyPointerToPerson->DateOfDeath) {CIS_DateofInfection=n;}
+                
+            }
+        }
+        
+    }
+    
+    E(cout << "Somebody has just been infected with CIN2_3!" << endl;)                // Error message - can be switched on/off
+}
+
+void EventMyCISInfection(person *MyPointerToPerson){
+    E(cout << "Somebody is about to get infected with CIS infection: " << endl;)            // Error message - can be switched on/off
+    if(MyPointerToPerson->Alive == 1) {       // Only execute if patient is still alive and has CIN1
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->CIS_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " CIS_DateofInfection: " << MyPointerToPerson->CIS_DateofInfection<< endl;
+        }
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+        ///Decide if person recovers or moves on to CIN2/3
+        if (MyPointerToPerson->CIS_DateofInfection>0 && MyPointerToPerson->HPV_Status==HPV_Status_CIS){
+            int year = floor(*p_GT);
+            double months = floor(((1-(*p_GT-year+0.01))*12));
+            
+            int j=0;
+            int n=-977;
+            //float TestCIN2_3Date=0;
+            std::random_device rd;
+            std::mt19937 gen{rd()};
+            std::uniform_int_distribution<> dis{0, 3};
+            j = dis(gen);
+    //        cout <<"j: "<< j<< endl;
+            
+            double YearFraction=-999;
+            if(months>=1){YearFraction=(RandomMinMax_2(0,months))/12.1;}            // This gets month of birth as a fraction of a year
+            if(months<1){YearFraction=0;}
+            double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
+            TestICCDate=(CIS_DateofInfection+j)+YearFraction;
+            if (h>ICC_Prevalence){ICC_DateofInfection=MyPointerToPerson->k;}{CIS_DateofRecovery=MyPointerToPerson->TestICCDate;}{HPV_Status=MyPointerToPerson->HPV_Status_Recovered;}                // In case they recover from CIS
+            
+            event * CIS_DateofRecoveryEvent = new event;
+            Events.push_back(CIS_DateofRecoveryEvent);
+            CIS_DateofRecoveryEvent->time = CIS_DateofRecovery;
+            CIS_DateofRecoveryEvent->p_fun = &EventMyHPVRecovery;
+            CIS_DateofRecoveryEvent->person_ID = MyPointerToPerson;
+            p_PQ->push(CIS_DateofRecoveryEvent);
+            
+            if (h<=ICC_Prevalence){                        // In case they progress to CIS
+                
+                if (TestICCDate<MyPointerToPerson->DateOfDeath){ICC_DateofInfection=MyPointerToPerson->TestICCDate;}{HPV_Status=MyPointerToPerson->HPV_Status_ICC;}
+                
+                event * ICC_DateofInfectionEvent = new event;
+                Events.push_back(ICC_DateofInfectionEvent);
+                ICC_DateofInfectionEvent->time = ICC_DateofInfection;
+                ICC_DateofInfectionEvent->p_fun = &EventMyICCInfection;
+                ICC_DateofInfectionEvent->person_ID = MyPointerToPerson;
+                p_PQ->push(ICC_DateofInfectionEvent);
+                
+                if (TestICCDate>=MyPointerToPerson->DateOfDeath) {ICC_DateofInfection=n;}
+                
+            }
+        }
+        
+    }
+    
+    E(cout << "Somebody has just been infected with CIS!" << endl;)                // Error message - can be switched on/off
+}
 
 
-// Recovery FUnction
+void EventMyICCInfection(person *MyPointerToPerson){
+    E(cout << "Somebody is about to get infected with ICC infection (no recovery): " << endl;)            // Error message - can be switched on/off
+    if(MyPointerToPerson->Alive == 1) {       // Only execute if patient is still alive
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->ICC_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " ICC_DateofInfection: " << MyPointerToPerson->ICC_DateofInfection<< endl;
+        }
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+        
+            }
+    
+    E(cout << "Somebody has just been infected with ICC!" << endl;)                // Error message - can be switched on/off
+}
+
+
+
+
+
+void EventMyHPVRecovery(person *MyPointerToPerson){
+    E(cout << "Somebody is about to recover from a stage of HPV infection: " << endl;)            // Error message - can be switched on/off
+    if(MyPointerToPerson->Alive == 1) {       // Only execute if patient is still alive and has CIN1
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->HPV_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " HPV_DateofInfection: " << MyPointerToPerson->HPV_DateofInfection<< endl;
+        }
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->CIN1_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " CIN1_DateofInfection: " << MyPointerToPerson->CIN1_DateofInfection<< endl;
+        }
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->CIN2_3_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " CIN2_3_DateofInfection: " << MyPointerToPerson->CIN2_3_DateofInfection<< endl;
+        }
+        
+        if (MyPointerToPerson->DateOfDeath<MyPointerToPerson->CIS_DateofInfection){
+            cout << "Error! GT " << *p_GT << " PersonID: " << MyPointerToPerson->PersonID << " Death: " << MyPointerToPerson->DateOfDeath << " CIS_DateofInfection: " << MyPointerToPerson->CIS_DateofInfection<< endl;
+        }
+        
+        MyPointerToPerson->Age= (*p_GT - MyPointerToPerson->DoB);                // Update age to get correct parameter below
+    
+}
+
+}
+
 
 
 //// --- HIV EVENT --- ////

@@ -35,8 +35,27 @@ extern double   CIN2_3_Prevalence;
 extern double   CIS_Prevalence;
 extern double   ICC_Prevalence;
 float TestCIN1Date=0;
+float TestCIN2_3Date=0;
+float TestCISDate=0;
+float TestICCDate=0;
 int k=-988;
-int m=2;
+int HPV_Status_HPV=1;
+int HPV_Status_CIN1=2;
+int HPV_Status_CIN2_3=3;
+int HPV_Status_CIS=4;
+int HPV_Status_ICC=5;
+int HPV_Status_Recovered=6;
+
+double HPV_Status=-999;
+double HPV_DateofInfection=-999;
+double CIN1_DateofInfection=-999;
+double CIN2_3_DateofInfection=-999;
+double CIS_DateofInfection=-999;
+double ICC_DateofInfection=-999;
+double HPV_DateofRecovery=-999;
+double CIN1_DateofRecovery=-999;
+double CIN2_3_DateofRecovery=-999;
+double CIS_DateofRecovery=-999;
 
 
 //// --- POINTERS TO EXTERNAL ARRAYS --- ////
@@ -369,7 +388,7 @@ void person::GetMyDateOfHPVInfection(){
             std::mt19937 gen{rd()};
             std::uniform_int_distribution<> dis{15, 65};
             j = dis(gen);
-            cout <<"j: "<< j<< endl;
+        //    cout <<"j: "<< j<< endl;
             
             float TestHPVDate=0;
             double YearFraction=-999;
@@ -377,9 +396,9 @@ void person::GetMyDateOfHPVInfection(){
             if(months<1){YearFraction=0;}
             double    h = ((double)rand() / (RAND_MAX));                // Get a random number between 0 and 1.  NB/ THIS SHOULD HAVE A PRECISION OF 15 decimals which should be enough but lets be careful!!
             if (h>HPV_Prevalence){HPV_DateofInfection=-988;}                // In case they do NOT get HPV ever
-                if (h<=HPV_Prevalence){                        // In case they DO get HPV in their life
+            if (h<=HPV_Prevalence){                        // In case they DO get HPV in their life
                     TestHPVDate=(DoB+j)+YearFraction;
-                    if (TestHPVDate<DateOfDeath){HPV_DateofInfection=TestHPVDate;}{HPV_Status=1;}
+                    if (TestHPVDate<DateOfDeath){HPV_DateofInfection=TestHPVDate;}{HPV_Status=HPV_Status_HPV;}
                     if (TestHPVDate>=DateOfDeath) {HPV_DateofInfection=-977;}
                 }
                         // Error message:

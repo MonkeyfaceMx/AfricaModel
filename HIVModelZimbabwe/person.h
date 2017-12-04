@@ -57,8 +57,16 @@ public:
     int ART;
     
     float TestCIN1Date;
+    float TestCIN2_3Date;
+    float TestCISDate;
+    float TestICCDate;
     int k;
-    int m;
+    int HPV_Status_HPV=1;
+    int HPV_Status_CIN1=2;
+    int HPV_Status_CIN2_3=3;
+    int HPV_Status_CIS=4;
+    int HPV_Status_ICC=5;
+    int HPV_Status_Recovered=6;
     
     double HT;                                      // -- Variables related to NCDs --
     int HT_status;

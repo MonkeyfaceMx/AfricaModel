@@ -31,6 +31,9 @@ using namespace std;
     void EventMyHPVInfection(person *MyPointerToPerson);       // Function executed once person gets infected with HPV
     void EventMyHPVRecovery(person *MyPointerToPerson);        // Function executed once person recovers from HPV
     void EventMyCIN1Infection(person *MyPointerToPerson);      // Function executed once person progresses from HPV to CIN1
+    void EventMyCIN2_3Infection(person *MyPointerToPerson);      // Function executed once person progresses from CIN1 to CIN2_3
+    void EventMyCISInfection(person *MyPointerToPerson);      // Function executed once person progresses from CIN2_3 to CIS
+    void EventMyICCInfection(person *MyPointerToPerson);      // Function executed once person progresses from CIS to ICC
 
 
     //// --- NCD Events ---
