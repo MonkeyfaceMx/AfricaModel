@@ -54,25 +54,7 @@
 		6968BD751FC31707004D54B2 /* fertility.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fertility.csv; sourceTree = "<group>"; };
 		6968BD761FC31707004D54B2 /* fertility_NoProj.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fertility_NoProj.csv; sourceTree = "<group>"; };
 		6968BD771FC31707004D54B2 /* HIV_incidence_men.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HIV_incidence_men.csv; sourceTree = "<group>"; };
-		6968BD781FC31707004D54B2 /* HIV_incidence_men_UG.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HIV_incidence_men_UG.csv; sourceTree = "<group>"; };
 		6968BD791FC31707004D54B2 /* HIV_incidence_women.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HIV_incidence_women.csv; sourceTree = "<group>"; };
-		6968BD7A1FC31707004D54B2 /* HIV_incidence_women_UG.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HIV_incidence_women_UG.csv; sourceTree = "<group>"; };
-		6968BD7B1FC31707004D54B2 /* incidence_men_central.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_central.csv; sourceTree = "<group>"; };
-		6968BD7C1FC31707004D54B2 /* incidence_men_coast.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_coast.csv; sourceTree = "<group>"; };
-		6968BD7D1FC31707004D54B2 /* incidence_men_eastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_eastern.csv; sourceTree = "<group>"; };
-		6968BD7E1FC31707004D54B2 /* incidence_men_nairobi.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_nairobi.csv; sourceTree = "<group>"; };
-		6968BD7F1FC31707004D54B2 /* incidence_men_northeastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_northeastern.csv; sourceTree = "<group>"; };
-		6968BD801FC31707004D54B2 /* incidence_men_nyanza.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_nyanza.csv; sourceTree = "<group>"; };
-		6968BD811FC31707004D54B2 /* incidence_men_riftvalley.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_riftvalley.csv; sourceTree = "<group>"; };
-		6968BD821FC31707004D54B2 /* incidence_men_western.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_men_western.csv; sourceTree = "<group>"; };
-		6968BD831FC31707004D54B2 /* incidence_women_central.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_central.csv; sourceTree = "<group>"; };
-		6968BD841FC31707004D54B2 /* incidence_women_coast.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_coast.csv; sourceTree = "<group>"; };
-		6968BD851FC31707004D54B2 /* incidence_women_eastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_eastern.csv; sourceTree = "<group>"; };
-		6968BD861FC31707004D54B2 /* incidence_women_nairobi.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_nairobi.csv; sourceTree = "<group>"; };
-		6968BD871FC31707004D54B2 /* incidence_women_northeastern.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_northeastern.csv; sourceTree = "<group>"; };
-		6968BD881FC31707004D54B2 /* incidence_women_nyanza.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_nyanza.csv; sourceTree = "<group>"; };
-		6968BD891FC31707004D54B2 /* incidence_women_riftvalley.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_riftvalley.csv; sourceTree = "<group>"; };
-		6968BD8A1FC31707004D54B2 /* incidence_women_western.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = incidence_women_western.csv; sourceTree = "<group>"; };
 		6968BD8B1FC31707004D54B2 /* LoadParam copy_NoProj.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "LoadParam copy_NoProj.txt"; sourceTree = "<group>"; };
 		6968BD8C1FC31707004D54B2 /* LoadParam.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LoadParam.txt; sourceTree = "<group>"; };
 		6968BD8D1FC31707004D54B2 /* mortality_array_men.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = mortality_array_men.csv; sourceTree = "<group>"; };
@@ -214,25 +196,7 @@
 				6968BD751FC31707004D54B2 /* fertility.csv */,
 				6968BD761FC31707004D54B2 /* fertility_NoProj.csv */,
 				6968BD771FC31707004D54B2 /* HIV_incidence_men.csv */,
-				6968BD781FC31707004D54B2 /* HIV_incidence_men_UG.csv */,
 				6968BD791FC31707004D54B2 /* HIV_incidence_women.csv */,
-				6968BD7A1FC31707004D54B2 /* HIV_incidence_women_UG.csv */,
-				6968BD7B1FC31707004D54B2 /* incidence_men_central.csv */,
-				6968BD7C1FC31707004D54B2 /* incidence_men_coast.csv */,
-				6968BD7D1FC31707004D54B2 /* incidence_men_eastern.csv */,
-				6968BD7E1FC31707004D54B2 /* incidence_men_nairobi.csv */,
-				6968BD7F1FC31707004D54B2 /* incidence_men_northeastern.csv */,
-				6968BD801FC31707004D54B2 /* incidence_men_nyanza.csv */,
-				6968BD811FC31707004D54B2 /* incidence_men_riftvalley.csv */,
-				6968BD821FC31707004D54B2 /* incidence_men_western.csv */,
-				6968BD831FC31707004D54B2 /* incidence_women_central.csv */,
-				6968BD841FC31707004D54B2 /* incidence_women_coast.csv */,
-				6968BD851FC31707004D54B2 /* incidence_women_eastern.csv */,
-				6968BD861FC31707004D54B2 /* incidence_women_nairobi.csv */,
-				6968BD871FC31707004D54B2 /* incidence_women_northeastern.csv */,
-				6968BD881FC31707004D54B2 /* incidence_women_nyanza.csv */,
-				6968BD891FC31707004D54B2 /* incidence_women_riftvalley.csv */,
-				6968BD8A1FC31707004D54B2 /* incidence_women_western.csv */,
 				6968BD8B1FC31707004D54B2 /* LoadParam copy_NoProj.txt */,
 				6968BD8C1FC31707004D54B2 /* LoadParam.txt */,
 				6968BD8D1FC31707004D54B2 /* mortality_array_men.csv */,
