@@ -32,8 +32,8 @@
 /* Begin PBXFileReference section */
 		25F0706B1F9A0F0200AE936B /* CountryParams.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = CountryParams.cpp; sourceTree = "<group>"; };
 		25F0706C1F9A0F0200AE936B /* CountryParams.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = CountryParams.hpp; sourceTree = "<group>"; };
-		69179EA21FC4657C00F0AA09 /* HIV_incidence_men.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = HIV_incidence_men.csv; sourceTree = "<group>"; };
-		69179EA31FC4657C00F0AA09 /* HIV_incidence_women.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = HIV_incidence_women.csv; sourceTree = "<group>"; };
+		3C41A0ED1FD816130012099B /* HIV_incidence_men.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = HIV_incidence_men.csv; sourceTree = "<group>"; };
+		3C41A0EE1FD816130012099B /* HIV_incidence_women.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = HIV_incidence_women.csv; sourceTree = "<group>"; };
 		6968BD4F1FC31706004D54B2 /* CancerArray.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CancerArray.csv; sourceTree = "<group>"; };
 		6968BD501FC31706004D54B2 /* CancerArray_2.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CancerArray_2.csv; sourceTree = "<group>"; };
 		6968BD511FC31706004D54B2 /* fertility.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fertility.csv; sourceTree = "<group>"; };
@@ -167,6 +167,8 @@
 		6968BD4E1FC31706004D54B2 /* Kenya_UG */ = {
 			isa = PBXGroup;
 			children = (
+				3C41A0ED1FD816130012099B /* HIV_incidence_men.csv */,
+				3C41A0EE1FD816130012099B /* HIV_incidence_women.csv */,
 				6968BD4F1FC31706004D54B2 /* CancerArray.csv */,
 				6968BD501FC31706004D54B2 /* CancerArray_2.csv */,
 				6968BD511FC31706004D54B2 /* fertility.csv */,
@@ -174,8 +176,6 @@
 				6968BD671FC31706004D54B2 /* LoadParam copy_NoProj.txt */,
 				6968BD681FC31706004D54B2 /* LoadParam.txt */,
 				6968BD691FC31706004D54B2 /* mortality_array_men.csv */,
-				69179EA21FC4657C00F0AA09 /* HIV_incidence_men.csv */,
-				69179EA31FC4657C00F0AA09 /* HIV_incidence_women.csv */,
 				6968BD6A1FC31706004D54B2 /* mortality_array_men_NoProj.csv */,
 				6968BD6B1FC31706004D54B2 /* mortality_array_women.csv */,
 				6968BD6C1FC31706004D54B2 /* mortality_array_women_NoProj.csv */,
